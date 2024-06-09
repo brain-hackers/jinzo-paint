@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// “ú–{Œê resources
+// Japanese resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -59,9 +59,18 @@ BEGIN
         MENUITEM "Open...",                     IDM_LOAD
         MENUITEM "Save As...",                  IDM_SAVE
         MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM "Save ClipBoard",              IDM_SAVE_CLIPBOARD
         MENUITEM SEPARATOR
         MENUITEM "Pallete Load",                IDM_PALETTE_LOAD
         MENUITEM "Load CustumTone",             IDM_LOAD_CUSTUM_TONE
+        MENUITEM SEPARATOR
+        POPUP "System"
+        BEGIN
+            MENUITEM "Line Adjust (0)",             IDM_LINE_ADJUST_0
+            , CHECKED
+            MENUITEM "Line Adjust (1)",             IDM_LINE_ADJUST_1
+            MENUITEM "Line Adjust (2)",             IDM_LINE_ADJUST_2
+        END
         MENUITEM SEPARATOR
         MENUITEM "Clear All",                   IDM_CLEAR
         MENUITEM "About",                       IDM_ABOUT
@@ -123,6 +132,15 @@ BEGIN
         MENUITEM "Open...",                     IDM_LOAD
         MENUITEM "Save As...",                  IDM_SAVE
         MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM "Save ClipBoard",              IDM_SAVE_CLIPBOARD
+        MENUITEM SEPARATOR
+        POPUP "System"
+        BEGIN
+            MENUITEM "Line Adjust (0)",             IDM_LINE_ADJUST_0
+            , CHECKED
+            MENUITEM "Line Adjust (1)",             IDM_LINE_ADJUST_1
+            MENUITEM "Line Adjust (2)",             IDM_LINE_ADJUST_2
+        END
         MENUITEM SEPARATOR
         MENUITEM "About",                       IDM_ABOUT
         MENUITEM "End",                         IDM_EXIT
@@ -243,13 +261,13 @@ BEGIN
     LTEXT           "JINZO Paint 16color",IDC_STATIC,41,13,75,10
     LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,41,106,
                     10
-    LTEXT           "Version 0.10",IDC_STATIC,50,25,59,10
+    LTEXT           "Version 1.02",IDC_STATIC,50,25,59,10
     ICON            IDI_MAIN_ICON,IDC_STATIC,10,10,20,20
 END
 
 IDD_OVERWRITE_DIALOG DIALOG DISCARDABLE  0, 0, 87, 53
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Overwrite ?"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -261,7 +279,7 @@ END
 
 IDD_MODIFIED_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Modified Data"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -274,7 +292,7 @@ END
 IDD_MOJI_DIALOG DIALOG DISCARDABLE  0, 18, 135, 131
 STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_VISIBLE | 
     WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "FONT"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -300,7 +318,7 @@ END
 
 IDD_EXIT_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Exit"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -359,7 +377,7 @@ BEGIN
             VALUE "OriginalFilename", "JZPaint16.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "JINZO Paint 16\0"
-            VALUE "ProductVersion", "0.10\0"
+            VALUE "ProductVersion", "1.02\0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -416,14 +434,14 @@ BEGIN
     BUTTON      ID_BUTTON40074
     BUTTON      ID_BUTTON40075
     BUTTON      ID_BUTTON40076
-    BUTTON      ID_BUTTON40148
-    BUTTON      ID_BUTTON40149
-    BUTTON      ID_BUTTON40150
-    BUTTON      ID_BUTTON40151
-    BUTTON      ID_BUTTON40152
-    BUTTON      ID_BUTTON40153
-    BUTTON      ID_BUTTON40154
     BUTTON      ID_BUTTON40155
+    BUTTON      ID_BUTTON40154
+    BUTTON      ID_BUTTON40153
+    BUTTON      ID_BUTTON40152
+    BUTTON      ID_BUTTON40151
+    BUTTON      ID_BUTTON40150
+    BUTTON      ID_BUTTON40149
+    BUTTON      ID_BUTTON40148
     BUTTON      ID_BUTTON40176
 END
 
@@ -475,7 +493,7 @@ BEGIN
     VK_RETURN,      IDM_RETURN,             VIRTKEY, NOINVERT
 END
 
-#endif    // “ú–{Œê resources
+#endif    // Japanese resources
 /////////////////////////////////////////////////////////////////////////////
 
 

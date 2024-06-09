@@ -13,7 +13,9 @@
 #include <Winbase.h>
 #include "jzpaint.h"
 
-TCHAR edit_filename[MAX_PATH+1]=TEXT("\\MyDocument\\(untitled).2bp");
+TCHAR edit_path[MAX_PATH+1]=TEXT("");
+TCHAR edit_filename[MAX_PATH+1]=TEXT("(untitled).bmp");
+//TCHAR edit_filename[MAX_PATH+1]=TEXT("\\MyDocument\\(untitled).2bp");
 //TCHAR backup_filename[MAX_PATH+1]=TEXT("(backup).2bp");
 
 BMI bmi ;
@@ -26,6 +28,7 @@ int	modified_flag=0;
 void force_save(void);
 void save_core(TCHAR *);
 BOOL load_core(HWND,TCHAR *);
+void save_clipboard_core(TCHAR *,int,int,int,int);
 
 BOOL page_clear(HWND hWnd)
 {
@@ -38,7 +41,7 @@ BOOL page_clear(HWND hWnd)
 	for (j=0;j<winHeight;j++)
 		for (i=0;i<winWidth;i++)
 			set_pixel(baseBuf,i,j,3);
-	wsprintf(edit_filename,TEXT("\\MyDocument\\(untitled).2bp"));
+	wsprintf(edit_filename,TEXT("(untitled).bmp"));
 	return TRUE;
 }
 
@@ -65,7 +68,7 @@ BOOL load_bmp(HWND hWnd)
 	ofn.nMaxFile = MAX_PATH + 1 ;
 	ofn.lpstrFileTitle = NULL ;
 	ofn.nMaxFileTitle = 0 ;
-	ofn.lpstrInitialDir = NULL ;
+	ofn.lpstrInitialDir = edit_path ;
 	ofn.lpstrTitle = NULL ;
 	ofn.Flags = 0 ;
 	ofn.nFileOffset = 0 ;
@@ -74,7 +77,11 @@ BOOL load_bmp(HWND hWnd)
 	ofn.lCustData = 0 ;
 	ofn.lpfnHook = NULL ;
 	ofn.lpTemplateName = NULL ;
+#ifdef SH4
 	if ( !GetOpenFileName( &ofn ) ) {
+#else
+	if ( !tGetOpenFileName( &ofn ) ) {
+#endif
 		return FALSE;
 	} 
 
@@ -105,7 +112,7 @@ BOOL load_custum_tone(HWND hWnd)
 	ofn.nMaxFile = MAX_PATH + 1 ;
 	ofn.lpstrFileTitle = NULL ;
 	ofn.nMaxFileTitle = 0 ;
-	ofn.lpstrInitialDir = NULL ;
+	ofn.lpstrInitialDir = edit_path ;
 	ofn.lpstrTitle = NULL ;
 	ofn.Flags = 0 ;
 	ofn.nFileOffset = 0 ;
@@ -114,7 +121,11 @@ BOOL load_custum_tone(HWND hWnd)
 	ofn.lCustData = 0 ;
 	ofn.lpfnHook = NULL ;
 	ofn.lpTemplateName = NULL ;
+#ifdef SH4
 	if ( !GetOpenFileName( &ofn ) ) {
+#else
+	if ( !tGetOpenFileName( &ofn ) ) {
+#endif
 		return FALSE;
 	} 
 
@@ -246,7 +257,7 @@ BOOL load_custum_tone(HWND hWnd)
 	return TRUE;
 }
 
-BOOL load_core(HWND hWnd,TCHAR *filename)
+BOOL load_core(HWND hWnd,TCHAR *fn)
 {
 	HANDLE	hFile;
 	DWORD	readsize ;
@@ -255,7 +266,7 @@ BOOL load_core(HWND hWnd,TCHAR *filename)
 	int		i,j;
 	int		x_file_offset;
 
-	hFile = CreateFile( filename, GENERIC_READ, FILE_SHARE_READ,
+	hFile = CreateFile( fn, GENERIC_READ, FILE_SHARE_READ,
 				0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0 ) ;
 	if ( hFile == INVALID_HANDLE_VALUE ) {
 		TCHAR		Message[ 256 ] ;
@@ -377,7 +388,14 @@ BOOL load_core(HWND hWnd,TCHAR *filename)
 		}
 	CloseHandle( hFile ) ;
 	InvalidateRect(hWnd,NULL,FALSE);
-	memcpy( edit_filename, filename, MAX_PATH+1 ) ;
+	for (i=0;;i++) 
+		if (fn[i]=='\0') break;
+	for (;;i--) 
+		if (fn[i]=='\\') break;
+	fn[i]='\0';
+	wsprintf(edit_path,TEXT("%s"),fn);
+	wsprintf(edit_filename,TEXT("%s"),&fn[i+1]);
+//	memcpy( edit_filename, filename, MAX_PATH+1 ) ;
 //	memcpy(tmpBuf,baseBuf,winWidth*winHeight/4);
 	modified_flag=0;
 	return TRUE;
@@ -406,7 +424,7 @@ BOOL load_palette(HWND hWnd)
 	ofn.nMaxFile = MAX_PATH + 1 ;
 	ofn.lpstrFileTitle = NULL ;
 	ofn.nMaxFileTitle = 0 ;
-	ofn.lpstrInitialDir = NULL ;
+	ofn.lpstrInitialDir = edit_path ;
 	ofn.lpstrTitle = NULL ;
 	ofn.Flags = 0 ;
 	ofn.nFileOffset = 0 ;
@@ -415,7 +433,11 @@ BOOL load_palette(HWND hWnd)
 	ofn.lCustData = 0 ;
 	ofn.lpfnHook = NULL ;
 	ofn.lpTemplateName = NULL ;
+#ifdef SH4
 	if ( !GetOpenFileName( &ofn ) ) {
+#else
+	if ( !tGetOpenFileName( &ofn ) ) {
+#endif
 		return FALSE;
 	} 
 	hFile = CreateFile( buf1, GENERIC_READ, FILE_SHARE_READ,
@@ -507,7 +529,7 @@ BOOL save_bmp(HWND hWnd)
 	ofn.lStructSize = sizeof ofn ;
     ofn.hwndOwner = hWnd ;
 	ofn.hInstance = ghInst ;
-	ofn.lpstrFilter = TEXT("Bitmap Files (*.bmp)\0\0") ;
+	ofn.lpstrFilter = TEXT("Bitmap Files (*.bmp)\0*.bmp\0\0") ;
 	ofn.lpstrCustomFilter = NULL ;
 	ofn.nMaxCustFilter = 0 ;
 	ofn.nFilterIndex = 0 ;
@@ -515,17 +537,21 @@ BOOL save_bmp(HWND hWnd)
 	ofn.nMaxFile = MAX_PATH + 1 ;
 	ofn.lpstrFileTitle = NULL ; 
 	ofn.nMaxFileTitle = 0 ;
-    ofn.lpstrInitialDir = NULL ;
+    ofn.lpstrInitialDir = edit_path ;
 	ofn.lpstrTitle = NULL ;
 	ofn.Flags = 0 ;  
 	ofn.nFileOffset = 0 ;
 	ofn.nFileExtension = 0 ;
-	ofn.lpstrDefExt = TEXT("2BP") ;
+	ofn.lpstrDefExt = TEXT("BMP") ;
 	ofn.lCustData = 0 ;
 	ofn.lpfnHook = NULL ;
 	ofn.lpTemplateName = NULL ;
- 		
+
+#ifdef SH4
 	if ( !GetSaveFileName( &ofn ) ) {
+#else
+	if ( !tGetSaveFileName( &ofn ) ) {
+#endif
 		MessageBeep( MB_ICONASTERISK ) ;
 		return FALSE;
 	}
@@ -546,7 +572,88 @@ BOOL save_bmp(HWND hWnd)
 			return FALSE;
 */
 	save_core(BmpFn);
-	memcpy( edit_filename, BmpFn, MAX_PATH+1 ) ;
+	for (i=0;;i++) 
+		if (BmpFn[i]=='\0') break;
+	for (;;i--) 
+		if (BmpFn[i]=='\\') break;
+	BmpFn[i]='\0';
+	wsprintf(edit_path,TEXT("%s"),BmpFn);
+	wsprintf(edit_filename,TEXT("%s"),&BmpFn[i+1]);
+//	memcpy( edit_filename, BmpFn, MAX_PATH+1 ) ;
+	modified_flag=0;
+	overwrite_flag=TRUE;
+	return TRUE;
+}
+BOOL save_clipboard(HWND hWnd,int sx,int sy,int ex,int ey)
+{
+	HANDLE	hFile;
+	TCHAR	BmpFn[MAX_PATH + 1],buf1[MAX_PATH+1];
+	OPENFILENAME	ofn ;
+	int		i;
+
+	for (i=0;;i++) 
+		if (edit_filename[i]=='\0') break;
+	edit_filename[i-4]='.';
+	edit_filename[i-3]='b'; 
+	edit_filename[i-2]='m'; 
+	edit_filename[i-1]='p';
+
+	memset( &ofn, 0, sizeof ofn ) ;
+	memcpy( buf1, edit_filename, MAX_PATH+1 ) ;
+	ofn.lStructSize = sizeof ofn ;
+    ofn.hwndOwner = hWnd ;
+	ofn.hInstance = ghInst ;
+	ofn.lpstrFilter = TEXT("Bitmap Files (*.bmp)\0*.bmp\0\0") ;
+	ofn.lpstrCustomFilter = NULL ;
+	ofn.nMaxCustFilter = 0 ;
+	ofn.nFilterIndex = 0 ;
+	ofn.lpstrFile = buf1 ;
+	ofn.nMaxFile = MAX_PATH + 1 ;
+	ofn.lpstrFileTitle = NULL ; 
+	ofn.nMaxFileTitle = 0 ;
+    ofn.lpstrInitialDir = edit_path ;
+	ofn.lpstrTitle = NULL ;
+	ofn.Flags = 0 ;  
+	ofn.nFileOffset = 0 ;
+	ofn.nFileExtension = 0 ;
+	ofn.lpstrDefExt = TEXT("BMP") ;
+	ofn.lCustData = 0 ;
+	ofn.lpfnHook = NULL ;
+	ofn.lpTemplateName = NULL ;
+ 		
+#ifdef SH4
+	if ( !GetSaveFileName( &ofn ) ) {
+#else
+	if ( !tGetSaveFileName( &ofn ) ) {
+#endif
+		MessageBeep( MB_ICONASTERISK ) ;
+		return FALSE;
+	}
+	_tcscpy(BmpFn,buf1); 
+   	if (buf1[0]== L'\\' || buf1[0] == L'/')
+		if (buf1[1]== L'\\' || buf1[0] == L'/')
+			_tcscpy(BmpFn,&buf1[1]);
+
+	hFile = CreateFile( BmpFn, GENERIC_READ, FILE_SHARE_READ,
+				0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0 ) ;
+	if ( hFile != INVALID_HANDLE_VALUE ) 
+		if (DialogBox(ghInst, MAKEINTRESOURCE(IDD_OVERWRITE_DIALOG), hWnd, SaveProc)==IDCANCEL)
+			return FALSE;
+	CloseHandle( hFile ) ;
+/*
+	if ( modified_flag==1 ) 
+		if (DialogBox(ghInst, MAKEINTRESOURCE(IDD_MODIFIED_DIALOG), hWnd, SaveProc)==IDCANCEL)
+			return FALSE;
+*/
+	save_clipboard_core(BmpFn,sx,sy,ex,ey);
+	for (i=0;;i++) 
+		if (BmpFn[i]=='\0') break;
+	for (;;i--) 
+		if (BmpFn[i]=='\\') break;
+	BmpFn[i]='\0';
+	wsprintf(edit_path,TEXT("%s"),BmpFn);
+	wsprintf(edit_filename,TEXT("%s"),&BmpFn[i+1]);
+//	memcpy( edit_filename, BmpFn, MAX_PATH+1 ) ;
 	modified_flag=0;
 	overwrite_flag=TRUE;
 	return TRUE;
@@ -567,7 +674,7 @@ void save_core(TCHAR *fn)
 {
 	HANDLE	hFile;
 	DWORD	writesize ;
-	int		i,j;
+	int		i,j,k;
 
 	hFile = CreateFile( fn, GENERIC_WRITE, 0, 0,
 					CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0 ) ;
@@ -603,11 +710,92 @@ void save_core(TCHAR *fn)
 	WriteFile( hFile, &BmpFH, sizeof BmpFH, &writesize, NULL ) ; 
 	WriteFile( hFile, &bmi, sizeof(BITMAPINFOHEADER)+sizeof(RGBQUAD)*16, &writesize, NULL ) ;
 
-	for (j=winHeight-1;j>=0;j--) 
+	k=0;
+	for (j=winHeight-1;j>=0;j--) {
 		for (i=0;i<winWidth;i+=2) {
 			BYTE	c=get_pixel(baseBuf,i,j)*16+get_pixel(baseBuf,i+1,j);
 			WriteFile( hFile, &c, 1, &writesize, NULL ) ;
 		}
+		k+=winWidth/2;
+		if (k>12*1024) {
+			FlushFileBuffers (hFile); 
+			k-=12*1024;
+		}
+	}
+	CloseHandle( hFile ) ;
+}
+void save_clipboard_core(TCHAR *fn,int sx,int sy,int ex,int ey)
+{
+	HANDLE	hFile;
+	DWORD	writesize ;
+	int		i,j,k;
+	int		pw,ph;
+
+	hFile = CreateFile( fn, GENERIC_WRITE, 0, 0,
+					CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0 ) ;
+	if ( hFile == INVALID_HANDLE_VALUE ) {
+		TCHAR		Message[ 256 ] ;
+		wsprintf( Message, TEXT("File Save error") ) ;
+		MessageBox( NULL, Message, TEXT("Error"), MB_OK ) ;
+		return;
+	}
+
+	pw=ex-sx+1;
+	ph=ey-sy+1;
+
+	bmi.bmih.biWidth = pw ;
+	bmi.bmih.biHeight = ph ;
+	bmi.bmih.biSize = sizeof(bmi.bmih) ;
+	bmi.bmih.biPlanes = 1 ;
+	bmi.bmih.biBitCount = 4 ;
+	bmi.bmih.biCompression = BI_RGB ;
+	bmi.bmih.biSizeImage = ((pw+8)&0xffffff8)*ph/2;
+	bmi.bmih.biXPelsPerMeter = 0 ;
+	bmi.bmih.biYPelsPerMeter = 0 ;
+	bmi.bmih.biClrUsed = 0 ;
+	bmi.bmih.biClrImportant = 0 ;
+	for (i=0;i<16;i++) {
+		bmi.rgq[i].rgbBlue  = init_color[i][0];
+		bmi.rgq[i].rgbGreen = init_color[i][1];
+		bmi.rgq[i].rgbRed   = init_color[i][2];
+	}
+	
+    BmpFH.bfType = 0x4D42 ;
+	BmpFH.bfSize = 0x76 + ((pw+8)&0xffffff8)*ph/2 ;
+	BmpFH.bfReserved1 = BmpFH.bfReserved2 = 0 ;
+    BmpFH.bfOffBits = sizeof(BmpFH)+sizeof(BITMAPINFOHEADER)+sizeof(RGBQUAD)*16  ;
+
+	WriteFile( hFile, &BmpFH, sizeof BmpFH, &writesize, NULL ) ; 
+	WriteFile( hFile, &bmi, sizeof(BITMAPINFOHEADER)+sizeof(RGBQUAD)*16, &writesize, NULL ) ;
+
+	k=0;
+	for (j=ey;j>=sy;j--) {
+		for (i=sx;i<=ex;i+=8) {
+			BYTE	c1,c2,c3,c4,c5,c6,c7,c8,c;
+			c2=c3=c4=c5=c6=c7=0;
+			c1=get_pixel(copyBuf,i,j);
+			if (i<=ex) c2=get_pixel(copyBuf,i+1,j);
+			if (i<=ex) c3=get_pixel(copyBuf,i+2,j);
+			if (i<=ex) c4=get_pixel(copyBuf,i+3,j);
+			if (i<=ex) c5=get_pixel(copyBuf,i+4,j);
+			if (i<=ex) c6=get_pixel(copyBuf,i+5,j);
+			if (i<=ex) c7=get_pixel(copyBuf,i+6,j);
+			if (i<=ex) c8=get_pixel(copyBuf,i+7,j);
+			c=c1*16+c2;
+			WriteFile( hFile, &c, 1, &writesize, NULL ) ;
+			c=c3*16+c4;
+			WriteFile( hFile, &c, 1, &writesize, NULL ) ;
+			c=c5*16+c6;
+			WriteFile( hFile, &c, 1, &writesize, NULL ) ;
+			c=c7*16+c8;
+			WriteFile( hFile, &c, 1, &writesize, NULL ) ;
+		}
+		k+=winWidth/2;
+		if (k>12*1024) {
+			FlushFileBuffers (hFile); 
+			k-=12*1024;
+		}
+	}
 	CloseHandle( hFile ) ;
 }
 

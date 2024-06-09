@@ -57,7 +57,7 @@ void select_free(HWND);
 void select_all(HWND);
 void select_magicwand(HWND);
 void pen_button(HWND);
-void col_button(HWND,int);
+BOOL col_button(HWND,int);
 void pat_button(HWND,int);
 void erase_button(HWND hWnd);
 void mag_button(HWND, int);
@@ -150,6 +150,7 @@ BOOL	pspc_flag;
 BYTE *baseBuf,*base24Buf,*dialogBuf,*colbuttonBuf,*undoBuf,*tmpBuf,*tmp24Buf,*copyBuf,*freeareaBuf;
 
 int	winWidth,winHeight;  
+int picWidth,picHeight;
 
 POINT	pts[3];
 COLORREF col[4];
@@ -197,6 +198,7 @@ int		font_x,font_y;
 BOOL	action_button_flag=FALSE;
 
 BOOL	overwrite_flag=FALSE;
+BOOL	clipboard_save_flag=FALSE;
 
 BYTE rotate_table[8][4]={
 	{1,3,6,4},
@@ -224,7 +226,7 @@ static TBBUTTON tb[] = {
 //	{ 0, 0,            TBSTATE_ENABLED, TBSTYLE_SEP,    0, 0, 0, -1},
 	{ BM_ETC, IDM_UNDO     ,TBSTATE_ENABLED, TBSTYLE_BUTTON, 0, 0, 0, -1},
 };
-HMENU	pen_menu,col_menu,pat_menu,erase_menu,line_menu,tool_menu;
+HMENU	pen_menu,col_menu,col_p_menu,pat_menu,erase_menu,line_menu,tool_menu;
 
 BOOL	test_flag=FALSE;
 int		test_n=0;
@@ -341,9 +343,12 @@ BYTE	tmp_color[16][3];
 
 BOOL	area_color[16],tmp_area_color[16];
 
+int	col_pulldown_x_pos;
+BOOL colsel_pflag,col_press_flag;
 int	colbutton_x,colbutton_y;
-int	tmp_col_sel=9;
+int	tmp_col_sel=0;
 int	tmp_bgc_color;
+int col_counter=-1;
 
 int		colset_x=0,colset_y=0;
 int		colset_move_x,colset_move_y;
@@ -354,6 +359,9 @@ BOOL	put_colbutton_flag=TRUE;
 BOOL	active_flag=TRUE;
 
 BOOL	called_jzv_flag;
+
+int		line_adjust=0;
+int		line_adjust_max=0;
 
 /* =====================================================================
 	WindowsƒvƒƒOƒ‰ƒ€‚ÌƒƒCƒ“ŠÖ”
@@ -457,6 +465,7 @@ void make_command_bar(HWND hWnd)
 			*p++=init_color[pcolor][1];
 			*p++=init_color[pcolor][2];
 		}
+	col_counter=5;
 
 	switch (toolpic) {
 		case TOOLPIC_PEN:
@@ -527,8 +536,7 @@ void jzp_timer(HWND hWnd)
 	tm++;
 	if (region_flag==SELECT || region_flag==SELECT_END || region_flag==DRAG ||
 		region_flag==SELECT_FREE || region_flag==SELECT_FREE_END)
-		if (tm%3==0)
-			InvalidateRect(hWnd,NULL,FALSE);
+		InvalidateRect(hWnd,NULL,FALSE);
 
 	if (region_flag==LINE || region_flag==RECTANGLE || region_flag==CIRCLE) {
 		if (!pspc_flag) {
@@ -551,8 +559,7 @@ void jzp_timer(HWND hWnd)
 			}	
 		}
 	}
-	if (erase_put_flag) 
-		if (tm%3==0) {
+	if (erase_put_flag) {
 			RECT rc;	 
 			int	p=style[1][pstyle];
 			rc.left=erase_x*loope_mag;
@@ -560,9 +567,12 @@ void jzp_timer(HWND hWnd)
 			rc.right=(erase_x+p)*loope_mag;
 			rc.bottom=(erase_y+p)*loope_mag+cbh;
 			InvalidateRect(hWnd,&rc,FALSE);
-		}
+	}
 
-	if (tm%3==0) set_colbutton();
+	if (col_counter>=0) {
+		set_colbutton();
+		col_counter--;
+	}
 }
 
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
@@ -599,15 +609,30 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					put_colbutton_flag=FALSE;
 					load_bmp(hWnd);
 					put_colbutton_flag=TRUE;
+					col_counter=5;
 					break;
 				case IDM_SAVE:		
 					put_colbutton_flag=FALSE;
 					save_bmp(hWnd);			
 					put_colbutton_flag=TRUE;
+					col_counter=5;
+					break; 
+				case IDM_SAVE_CLIPBOARD:		
+					sx=(region_sx<region_ex) ? region_sx : region_ex;
+					sy=(region_sy<region_ey) ? region_sy : region_ey;
+					ex=(region_sx>region_ex) ? region_sx : region_ex;
+					ey=(region_sy>region_ey) ? region_sy : region_ey;
+					put_colbutton_flag=FALSE;
+					save_clipboard(hWnd,sx,sy,ex,ey);			
+					put_colbutton_flag=TRUE;
+					col_counter=5;
 					break; 
 				case IDM_OVERWRITE:	force_save();	break; 
 
-				case IDM_ABOUT:		OnHelp(hWnd, wParam, lParam);		break;
+				case IDM_ABOUT:		
+					OnHelp(hWnd, wParam, lParam);		
+					col_counter=5;
+					break;
 
 				case IDM_RECT_COPY:	
 					if (rect_flag==TRUE) {
@@ -632,8 +657,10 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 								}
 							}
 						rect_flag=FALSE;
+						clipboard_save_flag=TRUE;
 					} else {
 						free_paste_start();
+						clipboard_save_flag=FALSE;
 					}
 					select_x=select_dx=0;
 					select_y=select_dy=0;
@@ -666,8 +693,10 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 								}
 							}
 						rect_flag=FALSE;
+						clipboard_save_flag=TRUE;
 					} else {
 						free_paste_start();
+						clipboard_save_flag=FALSE;
 					}
 					select_x=select_dx=0;
 					select_y=select_dy=0;
@@ -998,6 +1027,15 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					}
 						pstyle=2;
 					break;
+				case IDM_LINE_ADJUST_0:
+					line_adjust_max=0;
+					break;
+				case IDM_LINE_ADJUST_1:
+					line_adjust_max=1;
+					break;
+				case IDM_LINE_ADJUST_2:
+					line_adjust_max=2;
+					break;
 			}
 			break;
 		case WM_ACTIVATE: 
@@ -1079,11 +1117,18 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 				mode= (clipboard_flag==TRUE) ? MF_ENABLED : MF_GRAYED;
 				EnableMenuItem(hMenu,IDM_PASTE,		MF_BYCOMMAND | mode);
 
+				mode= (clipboard_save_flag==TRUE) ? MF_ENABLED : MF_GRAYED;
+				EnableMenuItem(hMenu,IDM_SAVE_CLIPBOARD,	MF_BYCOMMAND | mode);
+
 				mode= (clipboard_flag==TRUE && region_flag==DRAG) ? MF_ENABLED : MF_GRAYED;
 				EnableMenuItem(hMenu,IDM_DO_PASTE,	MF_BYCOMMAND | mode);
 
 				mode= (overwrite_flag) ? MF_ENABLED : MF_GRAYED;
 				EnableMenuItem(hMenu,IDM_OVERWRITE,	MF_BYCOMMAND | mode);
+
+				CheckMenuItem(CommandBar_GetMenu(ghWndCB, 0),IDM_LINE_ADJUST_0,	MF_BYCOMMAND | (line_adjust_max==0 ? MF_CHECKED : MF_UNCHECKED));
+				CheckMenuItem(CommandBar_GetMenu(ghWndCB, 0),IDM_LINE_ADJUST_1,	MF_BYCOMMAND | (line_adjust_max==1 ? MF_CHECKED : MF_UNCHECKED));
+				CheckMenuItem(CommandBar_GetMenu(ghWndCB, 0),IDM_LINE_ADJUST_2,	MF_BYCOMMAND | (line_adjust_max==2 ? MF_CHECKED : MF_UNCHECKED));
 /*
 				hMenu = CommandBar_GetMenu( GetDlgItem(hWnd,1), 0 );
 				mode= (loope_orginal_size_view_flag) ? MF_CHECKED : MF_UNCHECKED;
@@ -1121,10 +1166,8 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 							tpm.rcExclude.left=rc.left;
 							tpm.rcExclude.bottom=rc.bottom;	
 							tpm.rcExclude.right=rc.right;	
-//							hMenu=LoadMenu(ghInst,MAKEINTRESOURCE(IDR_COL));
-//							hPopupMenu=GetSubMenu(hMenu,0);
+							col_pulldown_x_pos=rc.left+30;
 							TrackPopupMenuEx(col_menu,TPM_LEFTALIGN|TPM_VERTICAL,rc.left,rc.bottom,hWnd,&tpm);
-//							DestroyMenu(hMenu);
 							col_menu_flag=TRUE;
 							return(FALSE);
 						}
@@ -1206,14 +1249,19 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 				LPMEASUREITEMSTRUCT	lpMI=(LPMEASUREITEMSTRUCT)lParam;
 				LPDRAWITEMSTRUCT lpDI=(LPDRAWITEMSTRUCT)lParam;
 				if (IDM_B_COL_0<=(lpDI->itemID) &&  (lpDI->itemID)<=IDM_B_COL_15) {
-					lpMI->itemWidth=10+22-7;
+					lpMI->itemWidth=10+22-7+12;
 					lpMI->itemHeight=13;
-				} else {
-					lpMI->itemWidth=10+22+40-7;
-					lpMI->itemHeight=22;
+					return TRUE;
 				}
+				if (IDM_B_COL_P_0<=(lpDI->itemID) &&  (lpDI->itemID)<=IDM_B_COL_P_15) {
+					lpMI->itemWidth=13;
+					lpMI->itemHeight=13;
+					return TRUE;
+				}
+				lpMI->itemWidth=10+22+40-7;
+				lpMI->itemHeight=22;
+				return TRUE;
 			}
-			return TRUE;
 		case WM_DRAWITEM:
 			{
 				RECT	rc;
@@ -1268,6 +1316,12 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					case IDM_PAINT:		button=4;	n=4;	break;
 					case IDM_FONT:		button=4;	n=5;	break;
 					case IDM_LINE:		button=4;	n=6;	break;
+				}
+				if (lpDI->itemState==ODS_SELECTED && button==1) {
+					colsel_pflag=FALSE;
+					if ((int)(GetMessagePos()&0xffff)>col_pulldown_x_pos)	colsel_pflag=TRUE;
+					if (colsel_pflag==TRUE)
+						color_mode[pcolor][n]=(color_mode[pcolor][n]==TRUE) ? FALSE : TRUE;
 				}
 				for (j=0;j<22;j++) 
 					for (i=0;i<10+22+50;i++) {
@@ -1334,20 +1388,17 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 							set_pixel_24(tmp24Buf,7,7,16+c);
 							set_pixel_24(tmp24Buf,7,8,16+c);
 						}
-/*
-						{
-							RECT frc;
-							frc.left=10+22;
-							frc.right=10+22+40-5;
-							frc.top=13+4;
-							frc.bottom=13+22;
-							DrawText(tmpDC, col_str[n], -1,&frc, DT_RIGHT | DT_CENTER);
-							for (j=0;j<22;j++)
-								for (i=frc.left;i<=frc.right;i++)
-									if (get_pixel(tmpBuf,i,j+22)==0)
-										set_pixel(tmpBuf,i,j,c);
+						if (color_mode[p][n]==TRUE) {
+							set_pixel_24(tmp24Buf,35,6,16+c);
+							set_pixel_24(tmp24Buf,35,7,16+c);
+							set_pixel_24(tmp24Buf,35,8,16+c);
+							set_pixel_24(tmp24Buf,36,6,16+c);
+							set_pixel_24(tmp24Buf,36,7,16+c);
+							set_pixel_24(tmp24Buf,36,8,16+c);
+							set_pixel_24(tmp24Buf,37,6,16+c);
+							set_pixel_24(tmp24Buf,37,7,16+c);
+							set_pixel_24(tmp24Buf,37,8,16+c);
 						}
-*/
 					}
 				}
 				if (button<4 && button!=1) {
@@ -1375,7 +1426,9 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					if (button==2) {
 						int p=ppat;
 						BYTE c=(lpDI->itemState==ODS_SELECTED) ? 2 : 0;
-						static TCHAR *pat_str[]={TEXT("100%"),TEXT("75%"),TEXT("50%"),TEXT("25%"),TEXT("CT")};
+						static TCHAR *pat_str[]={TEXT("100%"),TEXT(""),TEXT("75%"),TEXT(""),TEXT("50%"),TEXT(""),TEXT("25%"),TEXT(""),TEXT("CT")};
+						static TCHAR *pat_str_inv[]={TEXT(""),TEXT("75%"),TEXT(""),TEXT("50%"),TEXT(""),TEXT("25%"),TEXT(""),TEXT("0%"),TEXT("CT")};
+						RECT frc;
 						if (p==n) {
 							set_pixel(tmpBuf,5,10,c);
 							set_pixel(tmpBuf,5,11,c);
@@ -1387,18 +1440,18 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 							set_pixel(tmpBuf,7,11,c);
 							set_pixel(tmpBuf,7,12,c);
 						}
-						if (n%2==0) {
-							RECT frc;
-							frc.left=10+22;
-							frc.right=10+22+40-5;
-							frc.top=22+4;
-							frc.bottom=22+22;
-							DrawText(tmpDC, pat_str[n/2], -1,&frc, DT_RIGHT | DT_CENTER);
-							for (j=0;j<22;j++)
-								for (i=frc.left;i<=frc.right;i++)
-									if (get_pixel(tmpBuf,i,j+22)==0)
-										set_pixel(tmpBuf,i,j,c);
-						}
+						frc.left=10+22;
+						frc.right=10+22+40-5;
+						frc.top=22+4;
+						frc.bottom=22+22;
+						if (pat_inv==0)
+							DrawText(tmpDC, pat_str[n], -1,&frc, DT_RIGHT | DT_CENTER);
+						else
+							DrawText(tmpDC, pat_str_inv[n], -1,&frc, DT_RIGHT | DT_CENTER);
+						for (j=0;j<22;j++)
+							for (i=frc.left;i<=frc.right;i++)
+								if (get_pixel(tmpBuf,i,j+22)==0)
+									set_pixel(tmpBuf,i,j,c);
 					}
 					if (button==0 || button==3) {
 						s=style[button==0 ? 0:1][n];
@@ -1414,7 +1467,7 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 				}
 				rc=lpDI->rcItem;
 				if (button==1)
-					BitBlt(hdc,rc.left,rc.top,22+22+40,13,tmp24DC,0,0,SRCCOPY);
+					BitBlt(hdc,rc.left,rc.top,22+22+40+12,13,tmp24DC,0,0,SRCCOPY);
 				else
 					BitBlt(hdc,rc.left,rc.top,22+22+40,22,tmpDC,0,0,SRCCOPY);
 			}
@@ -1494,8 +1547,8 @@ void OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	AppendMenu(pat_menu,MF_STRING   ,IDM_PATINV,(LPCTSTR)TEXT("Reverse"));
 	col_menu=CreatePopupMenu();
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_0, (LPCTSTR)IDM_B_COL_0);
-	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_1,(LPCTSTR)IDM_B_COL_1);
-	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_2,(LPCTSTR)IDM_B_COL_2);
+	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_1, (LPCTSTR)IDM_B_COL_1);
+	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_2, (LPCTSTR)IDM_B_COL_2);
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_3, (LPCTSTR)IDM_B_COL_3);
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_4, (LPCTSTR)IDM_B_COL_4);
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_5, (LPCTSTR)IDM_B_COL_5);
@@ -1509,7 +1562,23 @@ void OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_13,(LPCTSTR)IDM_B_COL_13);
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_14,(LPCTSTR)IDM_B_COL_14);
 	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_15,(LPCTSTR)IDM_B_COL_15);
-//	AppendMenu(col_menu,MF_OWNERDRAW,IDM_B_COL_TP, (LPCTSTR)IDM_B_COL_TP);
+	col_p_menu=CreatePopupMenu();
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_0, (LPCTSTR)IDM_B_COL_P_0);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_1, (LPCTSTR)IDM_B_COL_P_1);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_2, (LPCTSTR)IDM_B_COL_P_2);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_3, (LPCTSTR)IDM_B_COL_P_3);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_4, (LPCTSTR)IDM_B_COL_P_4);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_5, (LPCTSTR)IDM_B_COL_P_5);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_6, (LPCTSTR)IDM_B_COL_P_6);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_7, (LPCTSTR)IDM_B_COL_P_7);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_8, (LPCTSTR)IDM_B_COL_P_8); 
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_9, (LPCTSTR)IDM_B_COL_P_9);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_10,(LPCTSTR)IDM_B_COL_P_10);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_11,(LPCTSTR)IDM_B_COL_P_11);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_12,(LPCTSTR)IDM_B_COL_P_12);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_13,(LPCTSTR)IDM_B_COL_P_13);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_14,(LPCTSTR)IDM_B_COL_P_14);
+	AppendMenu(col_p_menu,MF_OWNERDRAW,IDM_B_COL_P_15,(LPCTSTR)IDM_B_COL_P_15);
 	line_menu=CreatePopupMenu();
 	AppendMenu(line_menu,MF_OWNERDRAW,IDM_COM_LINE, (LPCTSTR)IDM_COM_LINE);
 	AppendMenu(line_menu,MF_OWNERDRAW,IDM_COM_RECT, (LPCTSTR)IDM_COM_RECT);
@@ -1753,7 +1822,7 @@ void OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	colbutton_x=rc.left+4;
 	colbutton_y=5;
 
-	SetTimer(hWnd, 1000,100,NULL); 
+	SetTimer(hWnd, 1000,500,NULL); 
 
 	page_clear(hWnd);
 	undo_store(hWnd);
@@ -1787,15 +1856,21 @@ void pen_button(HWND hWnd)
 	menu_check();
 	test_flag=TRUE;
 }
-void col_button(HWND hWnd,int n)
+BOOL col_button(HWND hWnd,int n)
 {
-	pcolor=n;
-	if (region_flag==ERASE) {
-		region_flag=PEN;
-		toolpic=TOOLPIC_PEN;
+	if (colsel_pflag==TRUE) {
+		col_press_flag=TRUE;
+		return FALSE;
+	} else {
+		pcolor=n;
+		if (region_flag==ERASE) {
+			region_flag=PEN;
+			toolpic=TOOLPIC_PEN;
+		}
+		make_command_bar(hWnd);
+		menu_check();
 	}
-	make_command_bar(hWnd);
-	menu_check();
+	return TRUE;
 }
 void pat_button(HWND hWnd,int n)
 {
@@ -1808,11 +1883,12 @@ void pat_button(HWND hWnd,int n)
 	for (j=0;j<16;j++)
 		for (i=0;i<16;i++) {
 			BYTE c;
-			if (n<=7)
-				c=brush_pat_4[ppat][i%4][j%4];
-			else
+			if (n<=7) {
+				c=brush_pat_4[pat_inv+ppat][i%4][j%4];
+			} else {
 				c=brush_pat_custum[i][j];
-			if (pat_inv!=0) c=1-c;
+				if (pat_inv!=0) c=1-c;
+			}
 			brush_pat[i][j]=c;
 		}
 	make_command_bar(hWnd);
@@ -2874,6 +2950,22 @@ void OnPaint(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		}	
 	}
 	EndPaint(hWnd, &ps);
+/*
+	if (col_press_flag==TRUE) {
+		col_press_flag=FALSE;
+		SendMessage(ghWndCB, TB_PRESSBUTTON, IDM_COLBUTTON,MAKELONG(TRUE, 0));
+							SendMessage(lpnmtb->hdr.hwndFrom,TB_GETRECT,(WPARAM)lpnmtb->iItem,(LPARAM)&rc);
+							MapWindowPoints(lpnmtb->hdr.hwndFrom,HWND_DESKTOP,(LPPOINT)&rc,2);
+							tpm.cbSize=sizeof(TPMPARAMS);	
+							tpm.rcExclude.top=rc.top;	
+							tpm.rcExclude.left=rc.left;
+							tpm.rcExclude.bottom=rc.bottom;	
+							tpm.rcExclude.right=rc.right;	
+							col_pulldown_x_pos=rc.left+30;
+							TrackPopupMenuEx(col_menu,TPM_LEFTALIGN|TPM_VERTICAL,rc.left,rc.bottom,hWnd,&tpm);
+							col_menu_flag=TRUE;
+	}
+*/
 }
 
 void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -2881,6 +2973,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	int			x,y; 
 
 	mouse_flag=MOVE;
+	line_adjust=0;
 	SetCapture(hWnd);
 //	undo_store(hWnd);
 	x = (LOWORD(lParam))/loope_mag+loope_x;
@@ -2943,6 +3036,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 							*p++=init_color[pcolor][1];
 							*p++=init_color[pcolor][2];
 						}
+					col_counter=5;
 					for (j=0;j<winHeight;j++)
 						for (i=0;i<winWidth;i++) 
 							set_pixel_24(base24Buf,i,j,get_pixel(baseBuf,i,j));
@@ -3023,6 +3117,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 							*p++=init_color[pcolor][1];
 							*p++=init_color[pcolor][2];
 						}
+					col_counter=5;
 					for (j=0;j<winHeight;j++)
 						for (i=0;i<winWidth;i++) 
 							set_pixel_24(base24Buf,i,j,get_pixel(baseBuf,i,j));
@@ -3124,6 +3219,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 							*p++=init_color[pcolor][1];
 							*p++=init_color[pcolor][2];
 						}
+					col_counter=5;
 					for (j=0;j<winHeight;j++)
 						for (i=0;i<winWidth;i++) 
 							set_pixel_24(base24Buf,i,j,get_pixel(baseBuf,i,j));
@@ -3216,6 +3312,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 							*p++=init_color[pcolor][1];
 							*p++=init_color[pcolor][2];
 						}
+					col_counter=5;
 					for (j=0;j<winHeight;j++)
 						for (i=0;i<winWidth;i++) 
 							set_pixel_24(base24Buf,i,j,get_pixel(baseBuf,i,j));
@@ -3493,6 +3590,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 				*p++=init_color[pcolor][1];
 				*p++=init_color[pcolor][2];
 			}
+		col_counter=5;
 		return;
 	}
 	if (region_flag==FONT) {
@@ -3644,6 +3742,7 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 			RECT	rc2;
 			rc2.left=rc.left-loope_x;
 			rc2.top=rc.top-loope_y+cbh;
+
 			rc2.right=rc.right-loope_x;
 			rc2.bottom=rc.bottom-loope_y+cbh;
 			InvalidateRect(hWnd,&rc2,FALSE);
@@ -3670,9 +3769,13 @@ void mouse_move(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	BYTE and_mask[4]={0x3f,0xcf,0xf3,0xfc};
 	BYTE shift[4]={6,4,2,0};
 
+	line_adjust++;
+	if (line_adjust<=line_adjust_max) return;
+	else line_adjust=0;
+
 	if (mouse_flag==UP) return;
 	mouse_flag=MOVE;
-	
+
 	GetWindowRect(hWnd, &rc);
 	x = (LOWORD(lParam))/loope_mag+loope_x;
 	y = (HIWORD(lParam)-cbh)/loope_mag+loope_y;
@@ -3825,7 +3928,7 @@ void mouse_move(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 	if (color_load_mode ==COLOR_LOAD_END)	return;
 	if (color_load_mode==COLOR_LOAD_START) {
-		int		i,xx,yy;
+		int		xx,yy;
 		xx = LOWORD(lParam);
 		yy = HIWORD(lParam)-cbh;
 		if (colload_state==COLLOAD_MOVE) {
@@ -3876,6 +3979,7 @@ void mouse_move(HWND hWnd, WPARAM wParam, LPARAM lParam)
 				*p++=init_color[pcolor][1];
 				*p++=init_color[pcolor][2];
 			}
+		col_counter=5;
 		return;
 	}
 	if (region_flag==HAND) {
@@ -4189,7 +4293,7 @@ void mouse_up(HWND hWnd, WPARAM wParam, LPARAM lParam)
 				InvalidateRect(hWnd,NULL,FALSE);
 			}
 			color_load_open_flag=FALSE;
-			if (0<=tmp_col_sel && tmp_col_sel<=16 && tmp_col_sel!=colset_exchange && colset_exchange!=-1) {
+			if (0<=tmp_col_sel && tmp_col_sel<16 && tmp_col_sel!=colset_exchange && colset_exchange!=-1) {
 				int i,j,k;
 				BYTE tmp;
 				BOOL b;
@@ -4266,7 +4370,7 @@ void mouse_up(HWND hWnd, WPARAM wParam, LPARAM lParam)
 				put_select_color(-1,-1);
 				InvalidateRect(hWnd,NULL,FALSE);
 			}
-			if (16<=tmp_col_sel && tmp_col_sel<=16+16 && colset_exchange!=-1) {
+			if (16<=tmp_col_sel && tmp_col_sel<16+16 && colset_exchange!=-1) {
 				init_color[colset_exchange][0]=init_color[tmp_col_sel+5][0];
 				init_color[colset_exchange][1]=init_color[tmp_col_sel+5][1];
 				init_color[colset_exchange][2]=init_color[tmp_col_sel+5][2];
@@ -4548,6 +4652,7 @@ void draw_text(HWND hDlg,TCHAR *fname,int fsize,TCHAR *fstr,BYTE charset,BYTE bo
 	region_flag=DRAG;
 	rect_flag=TRUE;
 	clipboard_flag=TRUE;
+	clipboard_save_flag=FALSE;
 	make_command_bar(GetParent(hDlg));
 	InvalidateRect(GetParent(hDlg),NULL,FALSE);
 }

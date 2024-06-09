@@ -43,9 +43,10 @@ extern BITMAPFILEHEADER	BmpFH ;
 extern BITMAPINFOHEADER	BmpIH ;
 
 extern int	winWidth,winHeight;
-
+extern int	picWidth,picHeight;
 
 extern BOOL save_bmp(HWND);
+extern BOOL save_clipboard(HWND,int,int,int,int);
 extern BOOL load_bmp(HWND);
 extern BOOL load_custum_tone(HWND);
 extern BOOL load_palette(HWND);
@@ -56,7 +57,7 @@ extern void color_fit(int n);
 extern BOOL page_clear(HWND);
 extern void	jzv_link(HWND);
 
-extern BYTE *baseBuf,*tmpBuf,*base24Buf,*tmp24Buf,*dialogBuf;
+extern BYTE *baseBuf,*tmpBuf,*base24Buf,*tmp24Buf,*dialogBuf,*copyBuf;
 extern HDC	dialogDC,tmpDC;
 extern int	modified_flag;
 
@@ -108,3 +109,13 @@ extern void init_color_conv_dialog(int,int);
 extern void init_color_mode_dialog();
 extern void init_color_bg_dialog(int);
 extern void init_color_area_dialog(void);
+
+/* function prototypes */
+#ifdef __cplusplus
+extern "C" { /* Assume C declarations for C++ */
+#endif /* __cplusplus */
+BOOL tGetOpenFileName(OPENFILENAME *);
+BOOL tGetSaveFileName(OPENFILENAME *);
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */

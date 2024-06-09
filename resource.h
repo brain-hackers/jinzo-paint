@@ -312,6 +312,10 @@
 #define IDM_PALETTE_LOAD                40174
 #define IDM_LOAD_CUSTUM_TONE            40175
 #define ID_BUTTON40176                  40176
+#define IDM_LINE_ADJUST_0               40178
+#define IDM_LINE_ADJUST_1               40179
+#define IDM_LINE_ADJUST_2               40180
+#define IDM_SAVE_CLIPBOARD              40181
 #define IDM_COL_0                       41000
 #define IDM_COL_1                       41001
 #define IDM_COL_2                       41002
@@ -348,14 +352,30 @@
 #define IDM_B_PATC                      41117
 #define IDM_CALLED_JZV                  49998
 #define IDM_JZV_LINK                    49999
+#define IDM_B_COL_P_0                     41120
+#define IDM_B_COL_P_1                     41121
+#define IDM_B_COL_P_2                     41122
+#define IDM_B_COL_P_3                     41123
+#define IDM_B_COL_P_4                     41124
+#define IDM_B_COL_P_5                     41125
+#define IDM_B_COL_P_6                     41126
+#define IDM_B_COL_P_7                     41127
+#define IDM_B_COL_P_8                     41128
+#define IDM_B_COL_P_9                     41129
+#define IDM_B_COL_P_10                    41130
+#define IDM_B_COL_P_11                    41131
+#define IDM_B_COL_P_12                    41132
+#define IDM_B_COL_P_13                    41133
+#define IDM_B_COL_P_14                    41134
+#define IDM_B_COL_P_15                    41135
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        128
-#define _APS_NEXT_COMMAND_VALUE         40177
-#define _APS_NEXT_CONTROL_VALUE         1106
+#define _APS_NEXT_RESOURCE_VALUE        130
+#define _APS_NEXT_COMMAND_VALUE         40182
+#define _APS_NEXT_CONTROL_VALUE         1109
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
