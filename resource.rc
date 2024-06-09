@@ -1,0 +1,492 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// “ú–{Œê resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+#ifdef _WIN32
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Open...",                     IDM_LOAD
+        MENUITEM "Save As...",                  IDM_SAVE
+        MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM SEPARATOR
+        MENUITEM "Pallete Load",                IDM_PALETTE_LOAD
+        MENUITEM "Load CustumTone",             IDM_LOAD_CUSTUM_TONE
+        MENUITEM SEPARATOR
+        MENUITEM "Clear All",                   IDM_CLEAR
+        MENUITEM "About",                       IDM_ABOUT
+        MENUITEM "End",                         IDM_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Select RectArea",             IDM_SELECT_REGION
+        MENUITEM "Select FreeArea",             IDM_SELECT_FREE
+        MENUITEM "Select All",                  IDM_SELECT_ALL
+        MENUITEM "MagicWand",                   IDM_MAGICWAND
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         IDM_RECT_CUT
+        MENUITEM "Copy",                        IDM_RECT_COPY
+        MENUITEM "ShowClipboard",               IDM_PASTE
+        MENUITEM "Paste",                       IDM_DO_PASTE
+        MENUITEM "Cansel",                      IDM_PASTE_CANSEL
+        MENUITEM SEPARATOR
+        POPUP "Flip / Rotate"
+        BEGIN
+            MENUITEM "Flip Vertical",               IDM_FLIP_VERTICAL
+            MENUITEM "Flip Horizontal",             IDM_FLIP_HORIZONTAL
+            MENUITEM "Rotate Left",                 IDM_ROTATE_LEFT
+            MENUITEM "Rotate Right",                IDM_ROTATE_RIGHT
+            MENUITEM SEPARATOR
+            MENUITEM "Reverse",                     IDM_CL_INVERSE
+            MENUITEM "Trace Edge",                  IDM_CL_TRACEEDGE
+            MENUITEM "Select Color Area",           IDM_CL_OMITWHITE
+            MENUITEM "Expand",                      IDM_CL_EXPAND
+            MENUITEM SEPARATOR
+            MENUITEM "Set Area Color",              IDM_SELAREACOLOR
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "BackGround Color",            IDM_BGCOLOR
+        MENUITEM "Color Convert",               IDM_COLOR_CONV
+        MENUITEM "Palette Option",              IDM_COLOR_OPTION
+        MENUITEM "Color Set",                   IDM_COLSET
+    END
+END
+
+IDR_LOOPE MENU DISCARDABLE 
+BEGIN
+    POPUP "loope"
+    BEGIN
+        MENUITEM "x 1",                         IDM_LOOPE_X1
+        MENUITEM "x 2",                         IDM_LOOPE_X2
+        MENUITEM "x 3",                         IDM_LOOPE_X3
+        MENUITEM "x 4",                         IDM_LOOPE_X4
+        MENUITEM "x 8",                         IDM_LOOPE_X8
+        MENUITEM SEPARATOR
+        MENUITEM "x1View",                      IDM_LOOPE_ORG
+    END
+END
+
+IDR_MAIN_H_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Open...",                     IDM_LOAD
+        MENUITEM "Save As...",                  IDM_SAVE
+        MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM SEPARATOR
+        MENUITEM "About",                       IDM_ABOUT
+        MENUITEM "End",                         IDM_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Clear All",                   IDM_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "BackGround Color",            IDM_BGCOLOR
+        MENUITEM "Color Convert",               IDM_COLOR_CONV
+        MENUITEM "Palette Option",              IDM_COLOR_OPTION
+        MENUITEM "Color Set",                   IDM_COLSET
+        MENUITEM "Palette Load",                IDM_PALETTE_LOAD
+        MENUITEM "Load CustumTone",             IDM_LOAD_CUSTUM_TONE
+    END
+    POPUP "Cut&&Paste"
+    BEGIN
+        MENUITEM "Select RectArea",             IDM_SELECT_REGION
+        MENUITEM "Select FreeArea",             IDM_SELECT_FREE
+        MENUITEM "Select All",                  IDM_SELECT_ALL
+        MENUITEM "MagicWand",                   IDM_MAGICWAND
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         IDM_RECT_CUT
+        MENUITEM "Copy",                        IDM_RECT_COPY
+        MENUITEM "ShowClipboard",               IDM_PASTE
+        MENUITEM "Paste",                       IDM_DO_PASTE
+        MENUITEM "Cansel",                      IDM_PASTE_CANSEL
+        MENUITEM SEPARATOR
+        POPUP "Flip / Rotate"
+        BEGIN
+            MENUITEM "Flip Vertical",               IDM_FLIP_VERTICAL
+            MENUITEM "Flip Horizontal",             IDM_FLIP_HORIZONTAL
+            MENUITEM "Rotate Left",                 IDM_ROTATE_LEFT
+            MENUITEM "Rotate Right",                IDM_ROTATE_RIGHT
+            MENUITEM SEPARATOR
+            MENUITEM "Reverse",                     IDM_CL_INVERSE
+            MENUITEM "Trace Edge",                  IDM_CL_TRACEEDGE
+            MENUITEM "Select Color Area",           IDM_CL_OMITWHITE
+            MENUITEM "Expand",                      IDM_CL_EXPAND
+            MENUITEM SEPARATOR
+            MENUITEM "Set Area Color",              IDM_SELAREACOLOR
+        END
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 117
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 70
+    END
+
+    IDD_OVERWRITE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 78
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 42
+    END
+
+    IDD_MODIFIED_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 8
+        RIGHTMARGIN, 94
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 46
+    END
+
+    IDD_MOJI_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 128
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 124
+    END
+
+    IDD_EXIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 8
+        RIGHTMARGIN, 94
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 46
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN_ICON           ICON    DISCARDABLE     "main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUT_DIALOG DIALOG DISCARDABLE  0, 0, 123, 77
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Version Info"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,36,56,50,14
+    LTEXT           "JINZO Paint 16color",IDC_STATIC,41,13,75,10
+    LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,41,106,
+                    10
+    LTEXT           "Version 0.10",IDC_STATIC,50,25,59,10
+    ICON            IDI_MAIN_ICON,IDC_STATIC,10,10,20,20
+END
+
+IDD_OVERWRITE_DIALOG DIALOG DISCARDABLE  0, 0, 87, 53
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Overwrite ?"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,9,28,30,14
+    PUSHBUTTON      "Cancel",IDCANCEL,48,28,30,14
+    CTEXT           "File Exists.",IDC_STATIC,21,5,45,8
+    CTEXT           "Overwrite ?",IDC_STATIC,20,15,47,8
+END
+
+IDD_MODIFIED_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Modified Data"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,8,32,30,14
+    PUSHBUTTON      "Cancel",IDCANCEL,64,32,30,14
+    CTEXT           "Data has been modified.",IDC_STATIC,15,5,73,8
+    CTEXT           "OK ?",IDC_STATIC,44,18,15,8
+END
+
+IDD_MOJI_DIALOG DIALOG DISCARDABLE  0, 18, 135, 131
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "FONT"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    EDITTEXT        IDC_FONTTEXT,7,22,121,73,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+    COMBOBOX        IDC_FONTNAME,27,6,58,107,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FONTSIZE,104,6,24,107,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Size:",IDC_STATIC,89,9,18,12
+    LTEXT           "Font:",IDC_STATIC,8,9,15,8
+    CONTROL         "Italic",IDC_FONTITALIC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,96,103,24,10
+    COMBOBOX        IDC_FONTBASELINE,41,101,30,99,CBS_DROPDOWN | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "BaseLine:",IDC_STATIC,8,103,33,13
+    CONTROL         "Bold",IDC_FONTBOLD2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,96,117,25,10
+    COMBOBOX        IDC_FONTALIGN,41,116,38,99,CBS_DROPDOWNLIST | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Alignment:",IDC_STATIC,8,118,33,13
+END
+
+IDD_EXIT_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Exit"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,8,32,30,14
+    PUSHBUTTON      "Cancel",IDCANCEL,64,32,30,14
+    CTEXT           "Exit OK?",-1,15,12,73,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_MESH                BITMAP  DISCARDABLE     "bitmap1.bmp"
+IDR_BM_COLOR            BITMAP  DISCARDABLE     "toolbar1.bmp"
+IDR_BM_ETC              BITMAP  DISCARDABLE     "toolbar2.bmp"
+IDR_BM_TOOL             BITMAP  DISCARDABLE     "toolbar.bmp"
+IDR_BM_PATTERN          BITMAP  DISCARDABLE     "bmp00001.bmp"
+IDR_BM_PEN_SEL          BITMAP  DISCARDABLE     "bm_pen_u.bmp"
+IDR_BM_PEN_USEL         BITMAP  DISCARDABLE     "bmp00002.bmp"
+IDR_BM_ERASE_SEL        BITMAP  DISCARDABLE     "bmp00003.bmp"
+IDR_BM_ERASE_USEL       BITMAP  DISCARDABLE     "bmp00004.bmp"
+IDR_BM_LOOPE            BITMAP  DISCARDABLE     "bmp00005.bmp"
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041104b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "T.Ueno\0"
+            VALUE "FileDescription", "Paint Tool for PsPC (CASSIOPEA E-55)\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "jzp16\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "JZPaint16.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "JINZO Paint 16\0"
+            VALUE "ProductVersion", "0.10\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x411, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_BM_COLOR TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40062
+END
+
+IDR_BM_ETC TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40088
+END
+
+IDR_BM_TOOL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40095
+    BUTTON      ID_BUTTON40096
+    BUTTON      ID_BUTTON40173
+    BUTTON      ID_BUTTON40097
+    BUTTON      ID_BUTTON40098
+    BUTTON      ID_BUTTON40099
+    BUTTON      ID_BUTTON40109
+    BUTTON      ID_BUTTON40100
+    BUTTON      ID_BUTTON40101
+    BUTTON      ID_BUTTON40102
+    BUTTON      ID_BUTTON40103
+    BUTTON      ID_BUTTON40104
+    BUTTON      ID_BUTTON40105
+    BUTTON      ID_BUTTON40108
+    BUTTON      ID_BUTTON40147
+END
+
+IDR_BM_PATTERN TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40069
+    BUTTON      ID_BUTTON40070
+    BUTTON      ID_BUTTON40071
+    BUTTON      ID_BUTTON40072
+    BUTTON      ID_BUTTON40073
+    BUTTON      ID_BUTTON40074
+    BUTTON      ID_BUTTON40075
+    BUTTON      ID_BUTTON40076
+    BUTTON      ID_BUTTON40148
+    BUTTON      ID_BUTTON40149
+    BUTTON      ID_BUTTON40150
+    BUTTON      ID_BUTTON40151
+    BUTTON      ID_BUTTON40152
+    BUTTON      ID_BUTTON40153
+    BUTTON      ID_BUTTON40154
+    BUTTON      ID_BUTTON40155
+    BUTTON      ID_BUTTON40176
+END
+
+IDR_BM_PEN_SEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40057
+    BUTTON      ID_BUTTON40058
+    BUTTON      ID_BUTTON40059
+END
+
+IDR_BM_PEN_USEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40082
+    BUTTON      ID_BUTTON40083
+    BUTTON      ID_BUTTON40084
+END
+
+IDR_BM_ERASE_SEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40066
+    BUTTON      ID_BUTTON40067
+    BUTTON      ID_BUTTON40068
+END
+
+IDR_BM_ERASE_USEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40085
+    BUTTON      ID_BUTTON40086
+    BUTTON      ID_BUTTON40087
+END
+
+IDR_BM_LOOPE TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40077
+    BUTTON      ID_BUTTON40078
+    BUTTON      ID_BUTTON40079
+    BUTTON      ID_BUTTON40080
+    BUTTON      ID_BUTTON40081
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE 
+BEGIN
+    VK_RETURN,      IDM_RETURN,             VIRTKEY, NOINVERT
+END
+
+#endif    // “ú–{Œê resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
