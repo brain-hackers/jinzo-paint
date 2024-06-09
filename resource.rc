@@ -1,0 +1,603 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// “ú–{Œê resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+#ifdef _WIN32
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Open...",                     IDM_LOAD
+        MENUITEM "Save As...",                  IDM_SAVE
+        MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM SEPARATOR
+        MENUITEM "Load CustumTone",             IDM_CUSTUM_TONE
+        MENUITEM SEPARATOR
+        MENUITEM "Clear All",                   IDM_CLEAR
+        MENUITEM "About",                       IDM_ABOUT
+        MENUITEM "End",                         IDM_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Select RectArea",             IDM_SELECT_REGION
+        MENUITEM "Select FreeArea",             IDM_SELECT_FREE
+        MENUITEM "Select All",                  IDM_SELECT_ALL
+        MENUITEM "MagicWand",                   IDM_MAGICWAND
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         IDM_RECT_CUT
+        MENUITEM "Copy",                        IDM_RECT_COPY
+        MENUITEM "ShowClipboard",               IDM_PASTE
+        MENUITEM "Paste",                       IDM_DO_PASTE
+        MENUITEM "Cansel",                      IDM_PASTE_CANSEL
+        MENUITEM SEPARATOR
+        POPUP "Flip / Rotate"
+        BEGIN
+            MENUITEM "Flip Vertical",               IDM_FLIP_VERTICAL
+            MENUITEM "Flip Horizontal",             IDM_FLIP_HORIZONTAL
+            MENUITEM "Rotate Left",                 IDM_ROTATE_LEFT
+            MENUITEM "Rotate Right",                IDM_ROTATE_RIGHT
+            MENUITEM SEPARATOR
+            MENUITEM "Reverse",                     IDM_CL_INVERSE
+            MENUITEM "Trace Edge",                  IDM_CL_TRACEEDGE
+            MENUITEM "Omit White",                  IDM_CL_OMITWHITE
+            MENUITEM "Expand",                      IDM_CL_EXPAND
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "BackGround Color",            IDM_BGCOLOR
+        MENUITEM "Color Convert",               IDM_COLOR_CONV
+        MENUITEM "Palette Option",              IDM_COLOR_OPTION
+    END
+END
+
+IDR_LOOPE MENU DISCARDABLE 
+BEGIN
+    POPUP "loope"
+    BEGIN
+        MENUITEM "x 1",                         IDM_LOOPE_X1
+        MENUITEM "x 2",                         IDM_LOOPE_X2
+        MENUITEM "x 3",                         IDM_LOOPE_X3
+        MENUITEM "x 4",                         IDM_LOOPE_X4
+        MENUITEM "x 8",                         IDM_LOOPE_X8
+        MENUITEM SEPARATOR
+        MENUITEM "x1View",                      IDM_LOOPE_ORG
+    END
+END
+
+IDR_MAIN_H_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Open...",                     IDM_LOAD
+        MENUITEM "Save As...",                  IDM_SAVE
+        MENUITEM "Save",                        IDM_OVERWRITE
+        MENUITEM SEPARATOR
+        MENUITEM "About",                       IDM_ABOUT
+        MENUITEM "End",                         IDM_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Clear All",                   IDM_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "BackGround Color",            IDM_BGCOLOR
+        MENUITEM "Color Convert",               IDM_COLOR_CONV
+        MENUITEM "Palette Option",              IDM_COLOR_OPTION
+        MENUITEM "Load CustumTone",             IDM_CUSTUM_TONE
+    END
+    POPUP "Cut&&Paste"
+    BEGIN
+        MENUITEM "Select RectArea",             IDM_SELECT_REGION
+        MENUITEM "Select FreeArea",             IDM_SELECT_FREE
+        MENUITEM "Select All",                  IDM_SELECT_ALL
+        MENUITEM "MagicWand",                   IDM_MAGICWAND
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         IDM_RECT_CUT
+        MENUITEM "Copy",                        IDM_RECT_COPY
+        MENUITEM "ShowClipboard",               IDM_PASTE
+        MENUITEM "Paste",                       IDM_DO_PASTE
+        MENUITEM "Cansel",                      IDM_PASTE_CANSEL
+        MENUITEM SEPARATOR
+        POPUP "Flip / Rotate"
+        BEGIN
+            MENUITEM "Flip Vertical",               IDM_FLIP_VERTICAL
+            MENUITEM "Flip Horizontal",             IDM_FLIP_HORIZONTAL
+            MENUITEM "Rotate Left",                 IDM_ROTATE_LEFT
+            MENUITEM "Rotate Right",                IDM_ROTATE_RIGHT
+            MENUITEM SEPARATOR
+            MENUITEM "Reverse",                     IDM_CL_INVERSE
+            MENUITEM "Trace Edge",                  IDM_CL_TRACEEDGE
+            MENUITEM "Omit White",                  IDM_CL_OMITWHITE
+            MENUITEM "Expand",                      IDM_CL_EXPAND
+        END
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 117
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 70
+    END
+
+    IDD_COLORMODE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 118
+        BOTTOMMARGIN, 156
+    END
+
+    IDD_OVERWRITE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 78
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 42
+    END
+
+    IDD_MODIFIED_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 8
+        RIGHTMARGIN, 94
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 46
+    END
+
+    IDD_MOJI_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 128
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 140
+    END
+
+    IDD_BGC_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 118
+        BOTTOMMARGIN, 76
+    END
+
+    IDD_CCONV_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 118
+        BOTTOMMARGIN, 156
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN_ICON           ICON    DISCARDABLE     "main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUT_DIALOG DIALOG DISCARDABLE  0, 0, 123, 77
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Version Info"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,36,56,50,14
+    LTEXT           "JINZO Paint",IDC_STATIC,41,13,75,10
+    LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,41,106,
+                    10
+    LTEXT           "Version 1.13",IDC_STATIC,50,25,59,10
+    ICON            IDI_MAIN_ICON,IDC_STATIC,10,10,20,20
+END
+
+IDD_COLORMODE_DIALOG DIALOG DISCARDABLE  0, 0, 123, 167
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Palette Option"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,4,142,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,68,142,50,14
+    CONTROL         "B",IDC_CHECK0_0,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,15,15,21,10
+    CONTROL         "LG",IDC_CHECK0_2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    66,15,24,10
+    CONTROL         "W",IDC_CHECK0_3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    91,15,21,10
+    CONTROL         "B",IDC_CHECK1_0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    15,47,21,10
+    CONTROL         "DG",IDC_CHECK1_1,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,39,47,25,10
+    CONTROL         "LG",IDC_CHECK1_2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    66,47,24,10
+    CONTROL         "W",IDC_CHECK1_3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    91,47,21,10
+    CONTROL         "B",IDC_CHECK2_0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    15,80,21,10
+    CONTROL         "DG",IDC_CHECK2_1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    39,80,25,10
+    CONTROL         "LG",IDC_CHECK2_2,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,66,80,24,10
+    CONTROL         "W",IDC_CHECK2_3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    91,80,21,10
+    CONTROL         "B",IDC_CHECK3_0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    15,114,21,10
+    CONTROL         "DG",IDC_CHECK3_1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    39,114,25,10
+    CONTROL         "LG",IDC_CHECK3_2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    66,114,24,10
+    CONTROL         "W",IDC_CHECK3_3,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,91,114,21,10
+    CONTROL         "DG",IDC_CHECK0_1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    39,15,25,10
+    GROUPBOX        "Black",IDC_STATIC,4,5,114,23,BS_CENTER
+    GROUPBOX        "Dark Gray",IDC_STATIC,4,37,114,23,BS_CENTER
+    GROUPBOX        "Light Gray",IDC_STATIC,4,70,114,23,BS_CENTER
+    GROUPBOX        "White",IDC_STATIC,4,104,114,23,BS_CENTER
+END
+
+IDD_OVERWRITE_DIALOG DIALOG DISCARDABLE  0, 0, 87, 53
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Overwrite ?"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,9,28,30,14
+    PUSHBUTTON      "Cancel",IDCANCEL,48,28,30,14
+    CTEXT           "File Exists.",IDC_STATIC,21,5,45,8
+    CTEXT           "Overwrite ?",IDC_STATIC,20,15,47,8
+END
+
+IDD_MODIFIED_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Modified Data"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,8,32,30,14
+    PUSHBUTTON      "Cancel",IDCANCEL,64,32,30,14
+    CTEXT           "Data has been modified.",IDC_STATIC,15,5,73,8
+    CTEXT           "OK ?",IDC_STATIC,44,18,15,8
+END
+
+IDD_MOJI_DIALOG DIALOG DISCARDABLE  0, 18, 135, 147
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "FONT"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    EDITTEXT        IDC_FONTTEXT,7,22,121,86,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+    COMBOBOX        IDC_FONTNAME,27,6,58,107,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_FONTSIZE,104,6,24,107,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Size:",IDC_STATIC,89,9,18,12
+    LTEXT           "Font:",IDC_STATIC,8,9,15,8
+    CONTROL         "Italic",IDC_FONTITALIC,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,96,113,24,10
+    COMBOBOX        IDC_FONTBASELINE,41,111,30,99,CBS_DROPDOWN | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "BaseLine:",IDC_STATIC,8,113,33,13
+    CONTROL         "Bold",IDC_FONTBOLD2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,96,127,25,10
+    COMBOBOX        IDC_FONTALIGN,41,126,38,99,CBS_DROPDOWNLIST | 
+                    CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Alignment:",IDC_STATIC,8,128,33,13
+END
+
+IDD_BGC_DIALOG DIALOG DISCARDABLE  0, 0, 123, 87
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "BackGround Color"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,4,62,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,68,62,50,14
+    CONTROL         "B",IDC_BGC_B,"Button",BS_AUTORADIOBUTTON,15,36,21,10
+    CONTROL         "DG",IDC_BGC_DG,"Button",BS_AUTORADIOBUTTON,37,36,25,10
+    CONTROL         "LG",IDC_BGC_LG,"Button",BS_AUTORADIOBUTTON,63,36,24,10
+    CONTROL         "W",IDC_BGC_W,"Button",BS_AUTORADIOBUTTON,88,36,21,10
+    CONTROL         "None",IDC_BGC_TP,"Button",BS_AUTORADIOBUTTON,15,18,31,
+                    10
+    GROUPBOX        "BackGround Color",IDC_STATIC,4,5,114,47,BS_CENTER,
+                    WS_EX_TRANSPARENT
+END
+
+IDD_CCONV_DIALOG DIALOG DISCARDABLE  0, 0, 123, 167
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CAPTIONOKBTN
+CAPTION "Color Convert"
+FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,4,142,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,68,142,50,14
+    CONTROL         "B",IDC_CCONV_DG_B,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,47,21,10
+    CONTROL         "DG",IDC_CCONV_DG_DG,"Button",BS_AUTORADIOBUTTON,37,47,
+                    25,10
+    CONTROL         "LG",IDC_CCONV_DG_LG,"Button",BS_AUTORADIOBUTTON,63,47,
+                    24,10
+    CONTROL         "W",IDC_CCONV_DG_W,"Button",BS_AUTORADIOBUTTON,88,47,21,
+                    10
+    CONTROL         "B",IDC_CCONV_LG_B,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,80,21,10
+    CONTROL         "DG",IDC_CCONV_LG_DG,"Button",BS_AUTORADIOBUTTON,37,80,
+                    25,10
+    CONTROL         "LG",IDC_CCONV_LG_LG,"Button",BS_AUTORADIOBUTTON,63,80,
+                    24,10
+    CONTROL         "W",IDC_CCONV_LG_W,"Button",BS_AUTORADIOBUTTON,88,80,21,
+                    10
+    CONTROL         "B",IDC_CCONV_W_B,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    15,114,21,10
+    CONTROL         "DG",IDC_CCONV_W_DG,"Button",BS_AUTORADIOBUTTON,37,114,
+                    25,10
+    CONTROL         "LG",IDC_CCONV_W_LG,"Button",BS_AUTORADIOBUTTON,63,114,
+                    24,10
+    CONTROL         "W",IDC_CCONV_W_W,"Button",BS_AUTORADIOBUTTON,88,114,21,
+                    10
+    CONTROL         "B",IDC_CCONV_B_B,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    15,15,21,10
+    CONTROL         "DG",IDC_CCONV_B_DG,"Button",BS_AUTORADIOBUTTON,37,15,25,
+                    10
+    CONTROL         "LG",IDC_CCONV_B_LG,"Button",BS_AUTORADIOBUTTON,63,15,24,
+                    10
+    CONTROL         "W",IDC_CCONV_B_W,"Button",BS_AUTORADIOBUTTON,88,15,21,
+                    10
+    GROUPBOX        "Black",IDC_STATIC,4,5,114,23,BS_CENTER,
+                    WS_EX_TRANSPARENT
+    GROUPBOX        "Dark Gray",IDC_STATIC,4,37,114,23,BS_CENTER,
+                    WS_EX_TRANSPARENT
+    GROUPBOX        "Light Gray",IDC_STATIC,4,70,114,23,BS_CENTER,
+                    WS_EX_TRANSPARENT
+    GROUPBOX        "White",IDC_STATIC,4,104,114,23,BS_CENTER,
+                    WS_EX_TRANSPARENT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_MESH                BITMAP  DISCARDABLE     "bitmap1.bmp"
+IDR_BM_COLOR            BITMAP  DISCARDABLE     "toolbar1.bmp"
+IDR_BM_ETC              BITMAP  DISCARDABLE     "toolbar2.bmp"
+IDR_BM_TOOL             BITMAP  DISCARDABLE     "toolbar.bmp"
+IDR_BM_PATTERN          BITMAP  DISCARDABLE     "bmp00001.bmp"
+IDR_BM_PEN_SEL          BITMAP  DISCARDABLE     "bm_pen_u.bmp"
+IDR_BM_PEN_USEL         BITMAP  DISCARDABLE     "bmp00002.bmp"
+IDR_BM_ERASE_SEL        BITMAP  DISCARDABLE     "bmp00003.bmp"
+IDR_BM_ERASE_USEL       BITMAP  DISCARDABLE     "bmp00004.bmp"
+IDR_BM_LOOPE            BITMAP  DISCARDABLE     "bmp00005.bmp"
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041104b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "T.Ueno\0"
+            VALUE "FileDescription", "Paint Tool for PsPC (CASSIOPEA E-55)\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "jzp\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "JZPaint.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "JINZO Paint\0"
+            VALUE "ProductVersion", "1.13\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x411, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_BM_COLOR TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40061
+    BUTTON      ID_BUTTON40062
+    BUTTON      ID_BUTTON40063
+    BUTTON      ID_BUTTON40064
+    BUTTON      ID_BUTTON40058
+END
+
+IDR_BM_ETC TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40088
+END
+
+IDR_BM_TOOL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40095
+    BUTTON      ID_BUTTON40096
+    BUTTON      ID_BUTTON40097
+    BUTTON      ID_BUTTON40098
+    BUTTON      ID_BUTTON40099
+    BUTTON      ID_BUTTON40109
+    BUTTON      ID_BUTTON40100
+    BUTTON      ID_BUTTON40101
+    BUTTON      ID_BUTTON40102
+    BUTTON      ID_BUTTON40103
+    BUTTON      ID_BUTTON40104
+    BUTTON      ID_BUTTON40105
+    BUTTON      ID_BUTTON40108
+    BUTTON      ID_BUTTON40147
+END
+
+IDR_BM_PATTERN TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40069
+    BUTTON      ID_BUTTON40070
+    BUTTON      ID_BUTTON40071
+    BUTTON      ID_BUTTON40072
+    BUTTON      ID_BUTTON40073
+    BUTTON      ID_BUTTON40074
+    BUTTON      ID_BUTTON40075
+    BUTTON      ID_BUTTON40076
+    BUTTON      ID_BUTTON40148
+    BUTTON      ID_BUTTON40149
+    BUTTON      ID_BUTTON40150
+    BUTTON      ID_BUTTON40151
+    BUTTON      ID_BUTTON40152
+    BUTTON      ID_BUTTON40153
+    BUTTON      ID_BUTTON40154
+    BUTTON      ID_BUTTON40155
+    BUTTON      ID_BUTTON40156
+END
+
+IDR_BM_PEN_SEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40057
+    BUTTON      ID_BUTTON40058
+    BUTTON      ID_BUTTON40059
+END
+
+IDR_BM_PEN_USEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40082
+    BUTTON      ID_BUTTON40083
+    BUTTON      ID_BUTTON40084
+END
+
+IDR_BM_ERASE_SEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40066
+    BUTTON      ID_BUTTON40067
+    BUTTON      ID_BUTTON40068
+END
+
+IDR_BM_ERASE_USEL TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40085
+    BUTTON      ID_BUTTON40086
+    BUTTON      ID_BUTTON40087
+END
+
+IDR_BM_LOOPE TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_BUTTON40077
+    BUTTON      ID_BUTTON40078
+    BUTTON      ID_BUTTON40079
+    BUTTON      ID_BUTTON40080
+    BUTTON      ID_BUTTON40081
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE 
+BEGIN
+    VK_RETURN,      IDM_RETURN,             VIRTKEY, NOINVERT
+END
+
+#endif    // “ú–{Œê resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
