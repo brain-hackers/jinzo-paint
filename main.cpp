@@ -1336,7 +1336,7 @@ void OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	pat_button(hWnd,ppat);
 	for (j=0;j<16;j++)
 		for (i=0;i<16;i++)
-			brush_pat_custum[j][i]==0;
+			brush_pat_custum[j][i]=0;
 
 	called_jzv_flag=FALSE;
 }

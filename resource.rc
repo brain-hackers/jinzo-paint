@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// “ú–{Œê resources
+// Japanese resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -246,15 +246,15 @@ FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,36,56,50,14
     LTEXT           "JINZO Paint",IDC_STATIC,41,13,75,10
-    LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,41,106,
+    LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,47,106,
                     10
-    LTEXT           "Version 1.13",IDC_STATIC,50,25,59,10
+    LTEXT           "Version 1.14",IDC_STATIC,50,25,59,10
     ICON            IDI_MAIN_ICON,IDC_STATIC,10,10,20,20
 END
 
 IDD_COLORMODE_DIALOG DIALOG DISCARDABLE  0, 0, 123, 167
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Palette Option"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -300,7 +300,7 @@ END
 
 IDD_OVERWRITE_DIALOG DIALOG DISCARDABLE  0, 0, 87, 53
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Overwrite ?"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -312,7 +312,7 @@ END
 
 IDD_MODIFIED_DIALOG DIALOG DISCARDABLE  0, 0, 103, 57
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Modified Data"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -325,7 +325,7 @@ END
 IDD_MOJI_DIALOG DIALOG DISCARDABLE  0, 18, 135, 147
 STYLE DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_POPUP | WS_VISIBLE | 
     WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "FONT"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -351,7 +351,7 @@ END
 
 IDD_BGC_DIALOG DIALOG DISCARDABLE  0, 0, 123, 87
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "BackGround Color"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -369,7 +369,7 @@ END
 
 IDD_CCONV_DIALOG DIALOG DISCARDABLE  0, 0, 123, 167
 STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_CAPTIONOKBTN
+EXSTYLE 0x80000000L
 CAPTION "Color Convert"
 FONT 9, "‚l‚r ‚oƒSƒVƒbƒN"
 BEGIN
@@ -467,7 +467,7 @@ BEGIN
             VALUE "OriginalFilename", "JZPaint.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "JINZO Paint\0"
-            VALUE "ProductVersion", "1.13\0"
+            VALUE "ProductVersion", "1.14\0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -586,7 +586,7 @@ BEGIN
     VK_RETURN,      IDM_RETURN,             VIRTKEY, NOINVERT
 END
 
-#endif    // “ú–{Œê resources
+#endif    // Japanese resources
 /////////////////////////////////////////////////////////////////////////////
 
 
