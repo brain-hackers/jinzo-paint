@@ -261,7 +261,7 @@ BEGIN
     LTEXT           "JINZO Paint 16color",IDC_STATIC,41,13,75,10
     LTEXT           "Copyright (C) 1999 Tomohiro Ueno",IDC_STATIC,12,41,106,
                     10
-    LTEXT           "Version 1.02",IDC_STATIC,50,25,59,10
+    LTEXT           "Version 1.10",IDC_STATIC,50,25,59,10
     ICON            IDI_MAIN_ICON,IDC_STATIC,10,10,20,20
 END
 
@@ -377,7 +377,7 @@ BEGIN
             VALUE "OriginalFilename", "JZPaint16.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "JINZO Paint 16\0"
-            VALUE "ProductVersion", "1.02\0"
+            VALUE "ProductVersion", "1.10\0"
             VALUE "SpecialBuild", "\0"
         END
     END
