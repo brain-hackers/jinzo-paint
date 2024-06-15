@@ -2,13 +2,13 @@
 
 ![JINZO Paint](loope.gif)
 
-[4-gradation grayscale](/../4-color) | **16-color** | [Full-color](/../full-color)
+[Viewer](/../viewer) | [4-gradation grayscale](/../4-color) | **16-color** | [Full-color](/../full-color)
 
-[4階調グレー版](/../4-color) | **16色版** | [フルカラー版](/../full-color)
+[Viewer](/../viewer) | [4階調グレー版](/../4-color) | **16色版** | [フルカラー版](/../full-color)
 
 JINZO Paint (16-color version) is a paint-style drawing tool for Windows CE. It features basic drawing, cut and paste, magnification, fill, straight line, rectangle, and ellipse drawing, as well as save/load functions. In addition, it is equipped with a powerful color calculation function. It only handles 16-color data of the whole screen size.
 
-JINZO Paint (16色版) は、Windows CE で動作する、ペイント系のお絵描きツールです。基本的な描画、カットアンドペースト、ルーペ、塗りつぶし、直線・矩形・楕円描画、セーブ/ ロード機能に 加えて、強力な色演算機能を搭載しています。扱えるデータは、実画面サイズの16色データのみです。
+JINZO Paint (16色版) は、Windows CE で動作する、ペイント系のお絵描きツールです。基本的な描画、カットアンドペースト、ルーペ、塗りつぶし、直線・矩形・楕円描画、セーブ/ロード機能に加えて、強力な色演算機能を搭載しています。扱えるデータは、実画面サイズの16色データのみです。
 
 ## License
 
