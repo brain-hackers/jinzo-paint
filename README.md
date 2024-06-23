@@ -14,6 +14,9 @@ This version is provided only in the executable binary form as the source code h
 
 このバージョンは、ソースコード遺失につき実行可能バイナリのみ提供されます。
 
+- [Official Website](http://www.tomozon.sakura.ne.jp/wince/)
+- [Documentation](./JZP2.txt)
+
 ## License
 
 This software is distributed here under the [MIT License](LICENSE), with the permission of the original author [Tomohiro Ueno](http://www.tomozon.sakura.ne.jp/wince/), expressed in the following e-mail reply.
