@@ -1,383 +1,385 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <HTML>
 <HEAD>
+<META charset="UTF-8">
 <title>JINZO Paint documentation</title>
 <LINK REL="STYLESHEET" TYPE="text/css" HREF="jzpaint.css">
+<LINK REL="ICON" HREF="favicon.ico" />
 </HEAD>
 
 <BODY>
 
-<H1>JINZO Paint 16�F�� version 1.02 �ɂ���</H1>
+<H1>JINZO Paint 16色版 version 1.02 について</H1>
 
 <P>
 </P>
 
-<H2>1. �T�v</H2>
+<H2>1. 概要</H2>
 <P>
-�@JINZO PAINT (16�F��)�́AWindowsCE �œ��삷��A�y�C���g�n�̂��G�`���c�[���ł��B<BR>
-�@��{�I�ȕ`��A�J�b�g�A���h�y�[�X�g�A���[�y�A�h��Ԃ��A�����E��`�E�ȉ~�`��A�Z�[�u/ ���[�h�@�\��
-�����āA���͂ȐF���Z�@�\�𓋍ڂ��Ă��܂��B<BR>
-�@������f�[�^�́A����ʃT�C�Y��16�F�f�[�^�݂̂ł��B<BR><BR>
-�@��҂̊��ł̊J������ѓ���m�F�́AJornada680 �ōs���Ă��܂��B
+　JINZO PAINT (16色版)は、WindowsCE で動作する、ペイント系のお絵描きツールです。<BR>
+　基本的な描画、カットアンドペースト、ルーペ、塗りつぶし、直線・矩形・楕円描画、セーブ/ ロード機能に
+加えて、強力な色演算機能を搭載しています。<BR>
+　扱えるデータは、実画面サイズの16色データのみです。<BR><BR>
+　作者の環境での開発および動作確認は、Jornada680 で行っています。
 </P>
 
-<H2>2. ��ʃC���[�W</H2>
+<H2>2. 画面イメージ</H2>
 <P>
 <center>
-<IMG SRC="loope.gif">�@�@�@
+<IMG SRC="loope.gif">　　　
 <IMG SRC="cut_paste.gif">
 </center>
 </P>
 
-<H2>3. �C���X�g�[�����@</H2>
+<H2>3. インストール方法</H2>
 <P>
-�@�C���X�g�[���̏ꍇ�́AJZPaint16.exe �� WindowsCE �̔C�ӂ̃t�H���_�ɃR�s�[���Ă��������B<BR>
-�@�A���C���X�g�[���̏ꍇ�́AJZPaint16.exe �� WindowsCE ����폜���Ă��������B<BR>
-�@���W�X�g���ɑ΂��鑀��́A�{�v���O�����ł͍s���Ă��܂���B
+　インストールの場合は、JZPaint16.exe を WindowsCE の任意のフォルダにコピーしてください。<BR>
+　アンインストールの場合は、JZPaint16.exe を WindowsCE から削除してください。<BR>
+　レジストリに対する操作は、本プログラムでは行っていません。
 </P>
 
-<H2>4. �@�\����</H2>
+<H2>4. 機能説明</H2>
 <CENTER>
 <table>
 <TR><TD><IMG SRC="command.gif"></TD>
 <TD>
 <OL>
-�@<LI> <A HREF="#FILE">File���j���[</A>
-�@<LI> <A HREF="#HENSHUU">Edit���j���[</A>
-�@<LI> <A HREF="#TOOL">�c�[���I��</A>
-�@<LI> <A HREF="#PEN">�y���̃T�C�Y</A>
-�@<LI> <A HREF="#PEN">�y���̐F</A>
-�@<LI> <A HREF="#PEN">�y���̃p�^�[��</A>
-�@<LI> <A HREF="#PEN">�����S���̃T�C�Y</A>
-�@<LI> <A HREF="#LOOPE">���[�y</A>
-�@<LI> <A HREF="#UNDO">�A���h�D</A>
+　<LI> <A HREF="#FILE">Fileメニュー</A>
+　<LI> <A HREF="#HENSHUU">Editメニュー</A>
+　<LI> <A HREF="#TOOL">ツール選択</A>
+　<LI> <A HREF="#PEN">ペンのサイズ</A>
+　<LI> <A HREF="#PEN">ペンの色</A>
+　<LI> <A HREF="#PEN">ペンのパターン</A>
+　<LI> <A HREF="#PEN">消しゴムのサイズ</A>
+　<LI> <A HREF="#LOOPE">ルーペ</A>
+　<LI> <A HREF="#UNDO">アンドゥ</A>
 </OL>
 </TD>
 </TR>
 </table>
 </CENTER>
 <P>
-�@��}���AJINZO Paint �̉�ʂł��B�X�^�C���X�y���ŁA�����̔��������ɊG��`�����Ƃ��o���܂��B
-�T�C�Y�͎���ʃT�C�Y�ŁAPsPC�ł̓^�X�N�o�[�\����Ԃ� 240 x 270 �s�N�Z���ł��B<BR>
-�@�㕔���j���[�o�[�ŁA�@�\��؂�ւ��邱�Ƃ��o���܂��B
+　上図が、JINZO Paint の画面です。スタイラスペンで、中央の白い部分に絵を描くことが出来ます。
+サイズは実画面サイズで、PsPCではタスクバー表示状態で 240 x 270 ピクセルです。<BR>
+　上部メニューバーで、機能を切り替えることが出来ます。
 </P>
 
-<H3><A NAME="FILE">(1) File���j���[</a></H3>
+<H3><A NAME="FILE">(1) Fileメニュー</a></H3>
 <P>
-�@�v���_�E�����j���[�ŁA�ȉ��̋@�\���g�p�ł��܂��B<BR>
+　プルダウンメニューで、以下の機能を使用できます。<BR>
 </p>
 <UL>
 <LI>Open...<BR>
-�@�摜�f�[�^�����[�h���܂��B<BR>
-�@2, 4, 8, 16, 24 bit/pixel�̖����kBMP���������Ƃ��o���܂����A16�F�ɕϊ�����܂��B
-�������A8,16,24bit/pixel�̏ꍇ�́A�ϊ���̃f�[�^�̕ۏ؂͂���܂���B<BR>
-�@�C�ӂ̃T�C�Y�̉摜�����[�h�ł��܂����A����ʃT�C�Y��菬�����ꍇ�͍���l�߂ƂȂ�܂��B
-�܂��A�傫���ꍇ�͐؂�̂Ă��܂��B<BR>
+　画像データをロードします。<BR>
+　2, 4, 8, 16, 24 bit/pixelの無圧縮BMPを扱うことが出来ますが、16色に変換されます。
+ただし、8,16,24bit/pixelの場合は、変換後のデータの保証はされません。<BR>
+　任意のサイズの画像をロードできますが、実画面サイズより小さい場合は左上詰めとなります。
+また、大きい場合は切り捨てられます。<BR>
 <LI>Save As...<BR>
-�@�摜�f�[�^���A4bit/pixel��BMP�t�H�[�}�b�g�Ńt�@�C�������w�肵�ăZ�[�u���܂��B<BR>
+　画像データを、4bit/pixelのBMPフォーマットでファイル名を指定してセーブします。<BR>
 <LI>Save<BR>
-�@�摜�f�[�^��4bit/pixel��BMP�t�H�[�}�b�g�ŏ㏑���Z�[�u���܂��BSave As...�����s������ł̂ݎ��s�\�ł��B<BR>
+　画像データを4bit/pixelのBMPフォーマットで上書きセーブします。Save As...を実行した後でのみ実行可能です。<BR>
 <LI>Save ClipBoard<BR>
-�@�N���b�v�{�[�h�Ɋi�[����Ă���摜�f�[�^��4bit/pixel��BMP�t�H�[�}�b�g�ŃZ�[�u���܂��B�N���b�v�{�[�h�ɋ�`�̈悪�i�[���ꂽ��Ԃł̂ݎ��s�\�ł��B<BR>
+　クリップボードに格納されている画像データを4bit/pixelのBMPフォーマットでセーブします。クリップボードに矩形領域が格納された状態でのみ実行可能です。<BR>
 <LI>Palette Load<BR>
-�@BMP�t�@�C�����w�肷�邱�ƂŁA���̉摜�̃p���b�g�������[�h�ł��܂��B
+　BMPファイルを指定することで、その画像のパレット情報をロードできます。
 <LI>Load CustumTone<BR>
-�@BMP�t�@�C�����w�肷�邱�ƂŁA���̉摜�̍���16x16pixel�̉摜���y���X�^�C���Ƃ��Ďg�p�ł��܂��B
+　BMPファイルを指定することで、その画像の左上16x16pixelの画像をペンスタイルとして使用できます。
 <LI>Clear All<BR>
-�@�ҏW��ʑS�̂𔒂œh��Ԃ��܂��B<BR>
+　編集画面全体を白で塗りつぶします。<BR>
 <LI>About<BR>
-�@�A�o�E�g�_�C�A���O��\�����܂��B<BR>
-<LI>End�@<BR>
-�@JINZO Paint���I�����܂��B<BR>
+　アバウトダイアログを表示します。<BR>
+<LI>End　<BR>
+　JINZO Paintを終了します。<BR>
 </UL>
 <p>
-�@<a href="http://tillanosoft.com/ce">Tillanosoft</a>������<a href="http://tillanosoft.com/ce/downloadsj.html">tGetFile.dll</a>�ɑΉ����Ă��܂��̂ŁA
-PsPC�APocketPC�APocketPostPet�̏ꍇ��tGetFile.dll���C���X�g�[�����邱�Ƃɂ��
-���쐫�̌��オ���҂ł��܂��B
+　<a href="http://tillanosoft.com/ce">Tillanosoft</a>さん作の<a href="http://tillanosoft.com/ce/downloadsj.html">tGetFile.dll</a>に対応していますので、
+PsPC、PocketPC、PocketPostPetの場合はtGetFile.dllをインストールすることにより
+操作性の向上が期待できます。
 </P>
 
-<H3><A NAME="HENSHUU">(2) Edit���j���[</A></H3>
+<H3><A NAME="HENSHUU">(2) Editメニュー</A></H3>
 <P>
-�@�v���_�E�����j���[�ŁA�ȉ��̋@�\���g�p�ł��܂��B<BR>
+　プルダウンメニューで、以下の機能を使用できます。<BR>
 <UL>
 <LI>Select RectArea<BR>
-�@��`�̈��I�����܂��B
+　矩形領域を選択します。
 <LI>Select FreeArea<BR>
-�@�s��`�̈��I�����܂��B
+　不定形領域を選択します。
 <LI>Select All<BR>
-�@�S�̈��I�����܂��B
+　全領域を選択します。
 <LI>MagicWand<BR>
-�@�^�b�v�������W�Ɠ��F�̘A���̈��I�����܂��B�A�����Ďw��\�ł��B<BR>
+　タップした座標と同色の連続領域を選択します。連続して指定可能です。<BR>
 <LI>Cut<BR>
-�@Select RectArea, Select FreeArea, Select All, MagicWand �̂����ꂩ�őI�������̈�� ClipBoard �ɃR�s�[���A
-���̗̈�𔒂œh��Ԃ��܂��B<BR>
-�@�܂��AClipBoard �̃f�[�^����ʂɕ\�����A�h���b�O�i�X�^�C���X�y���ňړ������邱�Ɓj�ɂĈړ��\�ȏ�Ԃɂ��܂��B
+　Select RectArea, Select FreeArea, Select All, MagicWand のいずれかで選択した領域を ClipBoard にコピーし、
+その領域を白で塗りつぶします。<BR>
+　また、ClipBoard のデータを画面に表示し、ドラッグ（スタイラスペンで移動させること）にて移動可能な状態にします。
 <LI>Copy<BR>
-�@Cut �Ɠ��l�ł����A�I�������̈�̔��ł̓h��Ԃ����s���܂���B
+　Cut と同様ですが、選択した領域の白での塗りつぶしを行いません。
 <LI>Paste<BR>
-�@��ʂɕ\������ ClipBoard �̃f�[�^���A�ҏW�摜�ɕ`�����݂܂��B
+　画面に表示した ClipBoard のデータを、編集画像に描き込みます。
 <LI>Show Clipboard<BR>
-�@ClipBoard �̃f�[�^����ʂɕ\�����A�h���b�O�i�X�^�C���X�y���ňړ������邱�Ɓj�ɂĈړ��\�ȏ�Ԃɂ��܂��B
+　ClipBoard のデータを画面に表示し、ドラッグ（スタイラスペンで移動させること）にて移動可能な状態にします。
 <LI>Cansel<BR>
-�@Cut&Paste �̑�����L�����Z�����A�y���`�惂�[�h�Ɉڍs���܂��B
+　Cut&Paste の操作をキャンセルし、ペン描画モードに移行します。
 
 
 <LI>Flip/Rotate<BR>
-�@��ʂɕ\������Ă��� ClipBoard �̃f�[�^�ɑ΂��āA��]�E���]�A���H���w�肵�܂��B�ȉ��̃T�u���j���[�������܂��B
+　画面に表示されている ClipBoard のデータに対して、回転・反転、加工を指定します。以下のサブメニューを持ちます。
   <UL>
-<LI>Flip Vertical<BR>�@�㉺���]
-<LI>Flip Horizontal<BR>�@���E���]
-<LI>Rotate Left<BR>�@����]
-<LI>Rotate Right<BR>�@�E��]
-<LI>Reverse<BR>�@�I��̈攽�]
-<LI>Trace Edge<BR>�@������B�I��̈�̊O���ɐڂ���C�ӂ̐F�̘A���̈��I��̈�̑ΏۊO�ɂ���
-<LI>Select Color Area<BR>�@�I��̈���̔C�ӂ̐F�̑I��̈��ΏۂƂ��A����ȊO��ΏۊO�Ƃ���
-<LI>Expand<BR>�@�I��̈��1�h�b�g�g������
-<LI>Set Area Color<BR>�@Trace Edge�����Select Color Area�Ŏg�p����F��I������
+<LI>Flip Vertical<BR>　上下反転
+<LI>Flip Horizontal<BR>　左右反転
+<LI>Rotate Left<BR>　左回転
+<LI>Rotate Right<BR>　右回転
+<LI>Reverse<BR>　選択領域反転
+<LI>Trace Edge<BR>　投げ縄。選択領域の外周に接する任意の色の連続領域を選択領域の対象外にする
+<LI>Select Color Area<BR>　選択領域内の任意の色の選択領域を対象とし、それ以外を対象外とする
+<LI>Expand<BR>　選択領域を1ドット拡張する
+<LI>Set Area Color<BR>　Trace EdgeおよびSelect Color Areaで使用する色を選択する
   </UL>
 
 <LI>BackGround Color<BR>
-�@�y���`�掞�̔w�i�F���w�肵�܂��B�ڍׂ�<A HREF="#BG_COLOR">�ʍ�(�w�i�F�ݒ�)</A>�ɂĐ������܂��B
+　ペン描画時の背景色を指定します。詳細は<A HREF="#BG_COLOR">別項(背景色設定)</A>にて説明します。
 
 <LI>Color Convert<BR>
-�@�\������Ă���ClipBoard �̃f�[�^�ɑ΂���F�ϊ��̐ݒ���s���܂��B�ڍׂ�<A HREF="#C_CONVERT">�ʍ�(�F�ϊ��@�\)</A>�ɂĐ������܂��B
+　表示されているClipBoard のデータに対する色変換の設定を行います。詳細は<A HREF="#C_CONVERT">別項(色変換機能)</A>にて説明します。
 
 <LI>Palette Option<BR>
-�@���摜�̐F�ƕ`��F�Ƃ̐F���Z�@�\�̐ݒ���s���܂��B�ڍׂ�<A HREF="#C_OPTION">�ʍ�(�F���Z�@�\)</A>�ɂĐ������܂��B
+　元画像の色と描画色との色演算機能の設定を行います。詳細は<A HREF="#C_OPTION">別項(色演算機能)</A>にて説明します。
 </UL>
 </P>
 <center><IMG SRC="cut_paste.gif"></center>
 
 <LI>Color Set<BR>
-�@16�F�̂��ꂼ��̐F�̐ݒ���s���܂��B�ڍׂ�<A HREF="#C_SET">�ʍ�(�F�ݒ�)</A>�ɂĐ������܂��B
+　16色のそれぞれの色の設定を行います。詳細は<A HREF="#C_SET">別項(色設定)</A>にて説明します。
 </UL>
 </P>
 <center><IMG SRC="cut_paste.gif"></center>
 
-<H3><A NAME="TOOL">(3) �c�[���I��</A></H3>
+<H3><A NAME="TOOL">(3) ツール選択</A></H3>
 <P>
-�@�v���_�E�����j���[�ŁA�ȉ��̃c�[����I���ł��܂��B
+　プルダウンメニューで、以下のツールを選択できます。
 <UL>
 <LI>Pen<BR>
-�@�y���`�惂�[�h�ł��B
+　ペン描画モードです。
 
 <LI>Erase<BR>
-�@�����S�����[�h�ł��B
+　消しゴムモードです。
 
 <LI>Spuit<BR>
-�@��ʂ��N���b�N�܂��̓h���b�O���邱�Ƃɂ��A�`���ʂ̍��W�̐F��`��F�ɐݒ�����܂��B
-�@�F���擾������́A�y���`�惂�[�h�Ɉڍs���܂��B
+　画面をクリックまたはドラッグすることにより、描画画面の座標の色を描画色に設定をします。
+　色を取得した後は、ペン描画モードに移行します。
 
 <LI>Hand<BR>
-�@��ʂ��h���b�O���邱�Ƃɂ��A�ҏW�摜���X�N���[�����܂��B
+　画面をドラッグすることにより、編集画像をスクロールします。
 
 <LI>Paint<BR>
-�@�h��Ԃ����s���܂��B�h��Ԃ��F�ƃp�^�[���́A�{�^���őI�����Ă�����̂��K�p����܂��B
+　塗りつぶしを行います。塗りつぶし色とパターンは、ボタンで選択しているものが適用されます。
 
 <LI>Font<BR>
-�@������`�悵�܂��B�I�����A��ʂ��^�b�v����ƃ_�C�A���O���J���܂��B�_�C�A���O�ł́A�ȉ��̍��ڂ��w��\�ł��B
+　文字を描画します。選択し、画面をタップするとダイアログが開きます。ダイアログでは、以下の項目が指定可能です。
   <UL>
-<LI>Font:<BR>�@�t�H���g����w�肵�܂��B
-<LI>Size:<BR>�@�t�H���g�T�C�Y���w�肵�܂��B
-<LI>(�����̓��̓{�b�N�X)<BR>�@��������͂��܂��B�����s�̓��͂��\�ł��B
-<LI>BaseLine:<BR>�@�����s�̓��͂̏ꍇ�́A�s�Ԋu���w�肵�܂��B
-<LI>Alignment:<BR>�@�����s�̓��͂̏ꍇ�́A�����������w�肵�܂��B�������A�����A�E�����̎w�肪�\�ł��B
-<LI>Italic:<BR>�@�Α̂��w�肵�܂��B
-<LI>Bold:<BR>�@�����̂��w�肵�܂��B
+<LI>Font:<BR>　フォント種を指定します。
+<LI>Size:<BR>　フォントサイズを指定します。
+<LI>(中央の入力ボックス)<BR>　文字を入力します。複数行の入力が可能です。
+<LI>BaseLine:<BR>　複数行の入力の場合の、行間隔を指定します。
+<LI>Alignment:<BR>　複数行の入力の場合の、文字揃えを指定します。左揃え、中央、右揃えの指定が可能です。
+<LI>Italic:<BR>　斜体を指定します。
+<LI>Bold:<BR>　太字体を指定します。
   </UL>
-�@�e���ڂ���͂��� OK ��I������ƁAClipBoard �ɕ����񂪕`�悳��A�J�n���Ƀ^�b�v�������W�ɕ\������܂��B
-�`�悵�����ꏊ�܂Ńh���b�O���āACut&Paste �� Paste �R�}���h�ŕҏW�摜�ɕ`�悵�Ă��������B
+　各項目を入力して OK を選択すると、ClipBoard に文字列が描画され、開始時にタップした座標に表示されます。
+描画したい場所までドラッグして、Cut&Paste の Paste コマンドで編集画像に描画してください。
 <LI>Line<BR>
-�@�����E��`�E�ȉ~�̕`����s���܂��B����E�F�E�h��Ԃ��p�^�[���́A�{�^���őI������Ă�����̂�
-�K�p����܂��B�ȉ��̃T�u���j���[�������܂��B
+　直線・矩形・楕円の描画を行います。線種・色・塗りつぶしパターンは、ボタンで選択されているものが
+適用されます。以下のサブメニューを持ちます。
   <UL>
-<LI>LINE<BR>�@����
-<LI>Rectangle<BR>�@��`
-<LI>Rectangle Fill<BR>�@�h��Ԃ��ꂽ��`
-<LI>Circle<BR>�@�ȉ~
-<LI>Circle Fill<BR>�@�h��Ԃ��ꂽ�ȉ~
+<LI>LINE<BR>　直線
+<LI>Rectangle<BR>　矩形
+<LI>Rectangle Fill<BR>　塗りつぶされた矩形
+<LI>Circle<BR>　楕円
+<LI>Circle Fill<BR>　塗りつぶされた楕円
   </UL>
-PsPC�ł̓A�N�V�����{�^���AHPC�ł̓V�t�g�L�[�������Ă���Ԃ́A�����͐����E�������ɁA��`�͐����`�ɁA�ȉ~�͐��~�ɂȂ�܂��B
+PsPCではアクションボタン、HPCではシフトキーを押している間は、直線は水平・垂直線に、矩形は正方形に、楕円は正円になります。
 </UL>
 </P>
 
-<H3><A NAME="PEN">(4) �y���̃T�C�Y�A(5) �y���̐F�A(6) �y���̃p�^�[���A(7) �����S���̃T�C�Y</A></H3>
+<H3><A NAME="PEN">(4) ペンのサイズ、(5) ペンの色、(6) ペンのパターン、(7) 消しゴムのサイズ</A></H3>
 <center><IMG SRC="pen.gif"></center><BR>
 <P>
-�@(4)���������ƂŁA�y���̃T�C�Y��ύX�ł��܂��B<BR><BR>
-�@(5)���������ƂŁA�y���̐F��ύX�ł��܂��B<BR><BR>
-�@(6)���������ƂŁA�y���̃p�^�[����ύX�ł��܂��B<BR>
+　(4)を押すことで、ペンのサイズを変更できます。<BR><BR>
+　(5)を押すことで、ペンの色を変更できます。<BR><BR>
+　(6)を押すことで、ペンのパターンを変更できます。<BR>
 </P>
 <center><IMG SRC="pattern.gif"></center><BR>
 <P>
-�@�y���̃X�^�C���́A100%, 87.5%, 75%, 62.5%, 50%, 37.5%, 25%, 12.5% ��8��ނ��L��܂��B<BR>
-�@���x��100%�����̏ꍇ�͏��X�Ԉ�����Ă��܂����A�Ԉ����ꂽ�h�b�g�͔w�i�F�iBackGround Color�_�C�A���O�Ŏw�肵���F�j�ƂȂ�܂��B�i��}�i��j�͔w�i�F�����F(None)�j<BR>
-�@��}(���j��75%��25%�̏��50%�ŕ`�������̂ł����A���x�̑傫���X�^�C���̏�ɖ��x�̏������X�^�C���ŕ`���Ă��A���x�͌��̑傫�����x�̂܂܂ƂȂ�܂��B<BR>
-�@CT��I������ƁALoad CustumTone�Ŏw�肵��16x16pixel�̃p�^�[�����X�^�C���Ɏw�肵�܂��B
-�@Reverse ��I������ƁA�p�^�[�������]���܂��B<BR><BR>
-�@(7)���������ƂŁA�����S���̃T�C�Y��ύX�ł��܂��B<BR>
-�@�����S���́A�F�����A�p�^�[����100%�ł��B<BR>
-�@�����S����I���������̒��O�̃y���̃T�C�Y�A�F�A�X�^�C���̐ݒ�͎c�邽�߁A�ēx�y���{�^�������A�܂��̓c�[���{�^������ Pen ��I�����邱�Ƃł��̐ݒ肩��`����ĊJ�ł��܂��B
+　ペンのスタイルは、100%, 87.5%, 75%, 62.5%, 50%, 37.5%, 25%, 12.5% の8種類が有ります。<BR>
+　密度が100%未満の場合は所々間引かれていますが、間引かれたドットは背景色（BackGround Colorダイアログで指定した色）となります。（上図（上）は背景色＝無色(None)）<BR>
+　上図(下）は75%と25%の上に50%で描いたものですが、密度の大きいスタイルの上に密度の小さいスタイルで描いても、密度は元の大きい密度のままとなります。<BR>
+　CTを選択すると、Load CustumToneで指定した16x16pixelのパターンをスタイルに指定します。
+　Reverse を選択すると、パターンが反転します。<BR><BR>
+　(7)を押すことで、消しゴムのサイズを変更できます。<BR>
+　消しゴムは、色＝白、パターン＝100%です。<BR>
+　消しゴムを選択した時の直前のペンのサイズ、色、スタイルの設定は残るため、再度ペンボタン押す、またはツールボタンから Pen を選択することでその設定から描画を再開できます。
 </P>
 
-<H3><A NAME="LOOPE">(8) ���[�y</A></H3>
+<H3><A NAME="LOOPE">(8) ルーペ</A></H3>
 <P>
-�@���[�y���[�h�ɂ��A�g��C���[�W�ł̕ҏW���\�ł��B<BR>
-�@�g�嗦�́A1�{(�ʏ�)�A2�{�A3�{�A4�{�A8�{����ݒ�o���܂��B<BR>
-�@1�{�ȊO�̏ꍇ�́Ax1view ���`�F�b�N���邱�Ƃō���Ɍ����C���[�W���\������܂��B<BR>
-�@�����\���ݒ�́A�e�{���Ōʂɐݒ�\�ŁA�N������2�{����\���ݒ�A3,4,8�{���\���ݒ�ł��B
-�@Hand�c�[���A�܂��̓J�[�\���L�[�ŃX�N���[���ł��܂��B�܂��A1�{�ł̓X�N���[�����W�͌��_�ɖ߂�܂��B<BR>�@
+　ルーペモードにより、拡大イメージでの編集が可能です。<BR>
+　拡大率は、1倍(通常)、2倍、3倍、4倍、8倍から設定出来ます。<BR>
+　1倍以外の場合は、x1view をチェックすることで左上に原寸イメージが表示されます。<BR>
+　原寸表示設定は、各倍率で個別に設定可能で、起動時は2倍が非表示設定、3,4,8倍が表示設定です。
+　Handツール、またはカーソルキーでスクロールできます。また、1倍ではスクロール座標は原点に戻ります。<BR>　
 </P>
-<center><IMG SRC="loope.gif"><BR>(���̊G�́A<A HREF="http://www.scargo.com/pae">�ς�</A>�쐬�̃f�[�^�ł��j
+<center><IMG SRC="loope.gif"><BR>(この絵は、<A HREF="http://www.scargo.com/pae">ぱえ</A>作成のデータです）
 </center><BR>
 
-<H3><A NAME="UNDO">(9) �A���h�D</A></H3>
+<H3><A NAME="UNDO">(9) アンドゥ</A></H3>
 <P>
-�@�e��̕`��ɑ΂��āA�P��̎��������o���܂��B
+　各種の描画に対して、１回の取り消しが出来ます。
 </P>
 
 
-<H3><A NAME="BG_COLOR">�w�i�F�ݒ�</A></H3>
+<H3><A NAME="BG_COLOR">背景色設定</A></H3>
 <P>
-�@�y���`�掞�̔w�i�F��ݒ肵�܂��B
+　ペン描画時の背景色を設定します。
 </P>
 <center><IMG SRC="bgc1.gif"></center><BR>
 <P>
-�@Edit���j���[���� BackGround Color ��I�ԂƁA��}�̃_�C�A���O���J���܂��B<BR>
-�@�����F�����16�F�̃{�^��������܂��B�p�^�[����100%�ȉ��̏ꍇ�A�����Ŏw�肵���F���w�i�F�ƂȂ�܂��B
+　Editメニューから BackGround Color を選ぶと、上図のダイアログが開きます。<BR>
+　透明色および16色のボタンがあります。パターンが100%以下の場合、ここで指定した色が背景色となります。
 </P>
 <center><IMG SRC="bgc2.gif"></center><BR>
 <P>
-�@��}�́A�`��F���ԂŁA(����)�w�i�F�����F�A(�E)�͔w�i�F���΂ł̕`���ł��B
+　上図は、描画色＝赤で、(中央)背景色＝無色、(右)は背景色＝緑での描画例です。
 </P>
 
 
-<H3><A NAME="C_CONVERT">�F�ϊ��@�\</A></H3>
+<H3><A NAME="C_CONVERT">色変換機能</A></H3>
 <P>
-�@�\������ ClipBoard �f�[�^�ɑ΂���A�F�̕ϊ���ݒ肵�܂��B
+　表示中の ClipBoard データに対する、色の変換を設定します。
 </P>
 <center><IMG SRC="cconvert.gif"></center><BR>
 <P>
-�@�ҏW���� Color Convert ��I�ԂƁA��}�̃_�C�A���O���J���܂��B<BR>
-�@�ォ��e16�F�̕`��F������A���ꂼ���16�F�̕ϊ��F�ɑ΂��郉�W�I�{�^��������܂��B<BR>
-�@�Ȃ��A�c�Ɖ��Ɉ�{�ÂK�C�h���C��������A���[�Ə�[�̊e16�F�̕\�����N���b�N���邱�ƂŃK�C�h���ړ��ł��܂��B
-�܂��A�_�C�A���O�̊O�̕`���ʂ��N���b�N���邱�ƂŁA�c�̃K�C�h���C�����N���b�N�������W�̕`�悳��Ă���F�Ɉړ��ł��܂��B����̎΂ߎΐ��̂���{�^�����^�b�v���邱�ƂŁA������ԂɃ��Z�b�g���܂��B
-��}�ł́A�e16�F�͂��ꂼ�ꎩ�g�̐F�ɐݒ肵�Ă��܂��B<BR><BR>
-�@�����ŁA������Ă��������B<BR>
-�@�A�^���i���G�j��`����ł��B<BR>
+　編集から Color Convert を選ぶと、上図のダイアログが開きます。<BR>
+　上から各16色の描画色があり、それぞれに16色の変換色に対するラジオボタンがあります。<BR>
+　なお、縦と横に一本づつガイドラインがあり、左端と上端の各16色の表示をクリックすることでガイドを移動できます。
+また、ダイアログの外の描画画面をクリックすることで、縦のガイドラインをクリックした座標の描画されている色に移動できます。左上の斜め斜線のあるボタンをタップすることで、初期状態にリセットします。
+上図では、各16色はそれぞれ自身の色に設定しています。<BR><BR>
+　ここで、例を見てください。<BR>
+　アタリ（下絵）を描く例です。<BR>
 </P>
 <center><IMG SRC="atari.gif"></center><BR>
 <P>
 <OL>
-<LI> �F(a)�ŉ��G��`���܂��B(�����ł͊D�F)<BR>
-<LI> �F(b)�Ŏ����`���܂��B(�����ł͍����F)<BR>
-<LI> Select RectArea �� Copy �ŁA�Ώۂ� ClipBoard �ɃR�s�[���܂��B<BR>
-<LI> �F(a)���F(c)(�����ł͔��F)���`�F�b�N���邱�ƂŐF(a)�̕������F(c)�ɕϊ������̂ŁA����� Paste ���邱�ƂŃA�^�������������Ƃ��o���܂��B<BR>
+<LI> 色(a)で下絵を描きます。(ここでは灰色)<BR>
+<LI> 色(b)で主線を描きます。(ここでは黒い炉)<BR>
+<LI> Select RectArea → Copy で、対象を ClipBoard にコピーします。<BR>
+<LI> 色(a)→色(c)(ここでは白色)をチェックすることで色(a)の部分が色(c)に変換されるので、これを Paste することでアタリ線を消すことが出来ます。<BR>
 </OL>
 </P>
 
-<H3><A NAME="C_OPTION">�F���Z�@�\</A></H3>
+<H3><A NAME="C_OPTION">色演算機能</A></H3>
 <P>
-�@�`��F�ƌ��摜�̐F�̊֌W��ݒ肵�܂��B
+　描画色と元画像の色の関係を設定します。
 </P>
 <center><IMG SRC="coption.gif"></center><BR>
 <P>
-�@Edit���j���[����Palette Option��I�ԂƁA��}�̃_�C�A���O���J���܂��B<BR>
-�@�ォ��16�F�̕`��F������A���ꂼ���16�F�̌��摜�̐F�ɑ΂���`�F�b�N�{�b�N�X������܂��B
-�e�`�F�b�N�{�b�N�X���^�b�v���邱�ƂŁA�`�F�b�N�̗L����؂肩�����܂��B<BR>
-�܂��A�㕔�E�����̊e�F�̕\���������^�b�v���邱�ƂŁA���̗���ꊇ��ON/OFF�ł��܂��B<BR>
-�@��}�ł́A�`��F���Ԃł͔w�i�F�����̓`�F�b�N����Ă��炸�A����ȊO�̓`�F�b�N����Ă��܂��B<BR><BR>
-�@�����́A�F�I���{�^���̃v���_�E�����j���[�̉E�[�ɂ�[�E]�̗L���ŕ\������܂��B�܂��A[�E]���^�b�v���邱�Ƃɂ��A�ݒ�̕ύX���\�ł��B<BR><BR>
-�@�����ŁA������Ă��������B<BR>
+　EditメニューからPalette Optionを選ぶと、上図のダイアログが開きます。<BR>
+　上から16色の描画色があり、それぞれに16色の元画像の色に対するチェックボックスがあります。
+各チェックボックスをタップすることで、チェックの有無を切りかえられます。<BR>
+また、上部・左部の各色の表示部分をタップすることで、その列を一括でON/OFFできます。<BR>
+　上図では、描画色＝赤では背景色＝黒はチェックされておらず、それ以外はチェックされています。<BR><BR>
+　これらは、色選択ボタンのプルダウンメニューの右端にも[・]の有無で表示されます。また、[・]をタップすることにより、設定の変更も可能です。<BR><BR>
+　ここで、例を見てください。<BR>
 </P>
 <center><IMG SRC="copt1.gif"></center><BR>
 <P>
-�@���E���D�̏�ɔZ�D�ŕ`�悵���ꍇ�ł����A�ʏ�ł͏�̂悤�ɍ��E���D�̏�ɔZ�ŕ`�悵�Ă��܂��܂��B
-�������A�F�I�v�V�����ŁA�`��F���Z�D�ɑ΂��Č��摜�̐F�����D�ɑ΂���`�F�b�N���O���ƁA���̂悤�ɔ��D�ɂ͕`����s���܂���B<BR>
-�@���̂悤�ɁA���摜�̐F�ɑ΂��ĕ`��F�ŕ`����s��/�s��Ȃ������R�ɐݒ肷�邱�Ƃ��o���܂��B<BR><BR>
+　黒・薄灰の上に濃灰で描画した場合ですが、通常では上のように黒・薄灰の上に濃で描画してしまいます。
+しかし、色オプションで、描画色＝濃灰に対して元画像の色＝薄灰に対するチェックを外すと、下のように薄灰には描画を行いません。<BR>
+　このように、元画像の色に対して描画色で描画を行う/行わないを自由に設定することが出来ます。<BR><BR>
 
-�@����ɁA�F���Z�@�\�֗̕��Ȏg�p���@���������Љ�܂��B<BR><BR>
+　さらに、色演算機能の便利な使用方法をいくつか紹介します。<BR><BR>
 
- (i) ���̗֊s���ɁA�F��h���ł��B<BR>
+ (i) 黒の輪郭線に、色を塗る例です。<BR>
 </P>
 <center><IMG SRC="copt2.gif"></center><BR>
 <P>
-�@��}(��)�̗֊s���ɐF��h��ꍇ�A�F�I�v�V�����ŕ`��F���Z�D�E���D�Ō��摜�̐F�����̃`�F�b�N���O���Ă����ƁA
-�֊s���͂��̂܂܂ŐF��h�邱�Ƃ��o���܂��B<BR><BR>
+　上図(上)の輪郭線に色を塗る場合、色オプションで描画色＝濃灰・薄灰で元画像の色＝黒のチェックを外しておくと、
+輪郭線はそのままで色を塗ることが出来ます。<BR><BR>
 
 
- (ii) ���D�ŉe��t������ɁA�Z�D��2�i�e�������ł��B<BR>
+ (ii) 薄灰で影を付けた上に、濃灰で2段影をつける例です。<BR>
 </P>
 <center><IMG SRC="copt3.gif"></center><BR>
 <P>
-�@�F�I�v�V������ݒ肵�Ȃ��ƁA�����̂悤�ɍ��┒�̏�ɂ��Z�D��h���Ă��܂����߁A�C�����ʓ|�ł��B<BR>
-�@�F�I�v�V�����ŁA�`��F���Z�D�Ō��摜�̐F�����E���̓`�F�b�N���O���A���D�ɂ����`�F�b�N�����Ă����ƁA���E���ɑ΂��Ă͕`����s�킸���D�ɂ����`����s���̂ŁA�͂ݏo���S�z�Ȃ��Z��`�����Ƃ��o���܂��B<BR><BR>
+　色オプションを設定しないと、左下のように黒や白の上にも濃灰を塗ってしまうため、修正が面倒です。<BR>
+　色オプションで、描画色＝濃灰で元画像の色＝黒・白はチェックを外し、薄灰にだけチェックをしておくと、黒・白に対しては描画を行わず薄灰にだけ描画を行うので、はみ出す心配なく濃を描くことが出来ます。<BR><BR>
 
 </P>
 
-<H3><A NAME="C_SET">�F�ݒ�</A></H3>
+<H3><A NAME="C_SET">色設定</A></H3>
 <P>
-�@16�F�̊e�F��RGB�l��ݒ肵�܂��B
+　16色の各色のRGB値を設定します。
 </P>
 <center><IMG SRC="cset.gif"></center><BR>
 <P>
-�@Edit���j���[����Color Set��I�ԂƁA��}�̃_�C�A���O���J���܂��B
-�@��ɂ�16�F�̊e�F�̃{�^��������A�N���b�N���Đݒ�ΏېF��I���ł��܂��B
-�܂��A�h���b�O���邱�Ƃŕ��т����ւ��邱�Ƃ��o���܂��B<BR>
-�@���̉���R,G,B�̃X���C�h�o�[�ŁARGB�̒l��ݒ肵�܂��B<BR>
-�@�_�C�A���O�̊O���N���b�N���邱�ƂŁA���̍��W�̕`�悳��Ă���F�ɐݒ�ΏېF��ύX�ł��܂��B
+　EditメニューからColor Setを選ぶと、上図のダイアログが開きます。
+　上には16色の各色のボタンがあり、クリックして設定対象色を選択できます。
+また、ドラッグすることで並びを入れ替えることが出来ます。<BR>
+　その下のR,G,Bのスライドバーで、RGBの値を設定します。<BR>
+　ダイアログの外をクリックすることで、その座標の描画されている色に設定対象色を変更できます。
 </P>
 <H2>5. Tips</H2>
 <P>
 <UL>
-<LI> ��ʂ��^�b�v�����Ƃ��ɃT�E���h��炷�ݒ�ɂ��Ă���ƁA�y���`�悪�����Ȃ邱�Ƃ�����܂��B
-     ���̏ꍇ�́A�V�X�e�����̐ݒ�ŃT�E���h�I�t�ɂ��Ă��������B
-<LI> �@��ɂ���ẮA�M�����ア�ƕ`�悪���҂��Ȃ�����ɂȂ�ꍇ������܂��B���̏ꍇ�́A�M�������߂ɂ��ď����Ă��������B
-<LI> �^�X�N�o�[�������I�ɉB���ݒ�ɂ��Ė{�v���O�������N������ƁA�`��G���A���^�X�N�o�[�̕������L����邱�Ƃ��o���܂��B
+<LI> 画面をタップしたときにサウンドを鳴らす設定にしていると、ペン描画が汚くなることがあります。
+     その場合は、システム側の設定でサウンドオフにしてください。
+<LI> 機種によっては、筆圧が弱いと描画が期待しない動作になる場合があります。その場合は、筆圧を強めにして書いてください。
+<LI> タスクバーを自動的に隠す設定にして本プログラムを起動すると、描画エリアをタスクバーの分だけ広く取ることが出来ます。
 </UL>
 </P>
 
-<H2>6. ���ӎ���</H2>
+<H2>6. 注意事項</H2>
 <P>
-�@�ȉ��ɁA�{�v���O�����̒��ӎ����������܂��B
+　以下に、本プログラムの注意事項を示します。
 <OL>
-<LI>�{�\�t�g�E�F�A�̓t���[�E�F�A�ł��B
-<LI>�{�\�t�g�E�F�A���C���X�g�[���E���삳�������Ƃɂ�艽���s����N�����Ƃ��Ă��A�����͈�؂̐ӔC�������܂���B����m�F�͂�����ƍs���Ă��܂����A�����܂ł��e���̐ӔC�ɂ����āA�C���X�g�[�����s���ĉ������B
-<LI>�{�\�t�g�E�F�A���g�p�������Ƃɂ��A�o�c�`�{�̂̃f�[�^�Ȃǂ���������\�����Ȃ��Ƃ͌����܂���B�V�X�e����f�[�^�̃o�b�N�A�b�v���Ȃ�ׂ�����Ă������Ƃ�S�����Ă��������B
-<LI>��c���ړI�ɂ��l�Ԃ̍Ĕz�z�͐������܂���B������ł��A�����̗L��l�Ƀf�����R�s�[���Ă����ĉ������B�Ȃ��A���T�C�g��a�a�r�ւ̓]�ڂɂ��ẮA������܂ł��A���������B
-<LI>�{�\�t�g�E�F�A�̓t���[�E�F�A�Ƃ��ė��ʂ����Ă��܂����A���̃\�t�g�̒��쌠�ɂ��Ă͕������Ă��܂���B����āA�\�t�g�E�F�A�A�h�L�������g�Ɋւ�����҂͋ւ������Ă��������܂��B
+<LI>本ソフトウェアはフリーウェアです。
+<LI>本ソフトウェアをインストール・動作させたことにより何か不具合が起ったとしても、当方は一切の責任を持ちません。動作確認はきちんと行っていますが、あくまでも各自の責任において、インストールを行って下さい。
+<LI>本ソフトウェアを使用したことにより、ＰＤＡ本体のデータなどが消失する可能性がないとは言えません。システムやデータのバックアップをなるべく取っておくことを心がけてください。
+<LI>非営利目的による個人間の再配布は制限しません。いくらでも、興味の有る人にデモ＆コピーしてあげて下さい。なお、他サイトやＢＢＳへの転載については、こちらまでご連絡下さい。
+<LI>本ソフトウェアはフリーウェアとして流通させていますが、そのソフトの著作権については放棄していません。よって、ソフトウェア、ドキュメントに関する改編は禁じさせていただきます。
 </OL>
 </P>
 
-<H2>7. �A����</H2>
+<H2>7. 連絡先</H2>
 <P>
-�@���ӌ��A�䊴�z�Ȃǂ�����܂�����A��҂܂ł��肢���܂��B<BR><BR>
-�@�@�@�@���O�F���@�q�O<BR>
-�@�@�@�@e-mail�F<A HREF="mailto:t-ueno@mtc.biglobe.ne.jp">t-ueno@mtc.biglobe.ne.jp</A><BR>
-�@�@�@�@�z�[���y�[�W�F<A HREF="http://users.goo.ne.jp/t-ueno/index.html">UENO Tomohiro HomePage</A><BR>
+　ご意見、御感想などがありましたら、作者までお願いします。<BR><BR>
+　　　　名前：上野　智弘<BR>
+　　　　e-mail：<A HREF="mailto:t-ueno@mtc.biglobe.ne.jp">t-ueno@mtc.biglobe.ne.jp</A><BR>
+　　　　ホームページ：<A HREF="http://users.goo.ne.jp/t-ueno/index.html">UENO Tomohiro HomePage</A><BR>
 </P>
 
-<H2>8. �ӎ�</H2>
+<H2>8. 謝辞</H2>
 <P>
-�@���̃v���O�����쐬�ɂ�����A�ȉ��̕��X�ɂ����b�ɂȂ�܂����B
+　このプログラム作成にあたり、以下の方々にお世話になりました。
 <UL>
-<LI> <A HREF="http://www.tt.rim.or.jp/~yamacha">yamacha</A>�F���A�d�l�����A����m�F
-<LI> <A HREF="http://www.scargo.com/pae">�ς�</A>�F�d�l�����A����m�F
-<LI> <A HREF="http://www2e.biglobe.ne.jp/~ichise">������</A>�F�d�l�����A����m�F
-<LI> <A HREF="http://www2q.biglobe.ne.jp/%7Ecoolly/index.html">coolly</A>�F�d�l�����A����m�F
-<LI> <A HREF="http://village.infoweb.ne.jp/~fxba0022/">sugich</A>�F�d�l�����A�h�L�������g����
-<LI> <A HREF="http://www.alles.or.jp/~hidetosh/index3.htm">BAB</A>�F����m�F
-<LI> <A HREF="http://homepage1.nifty.com/perceaw/">�y���тƋ��a���̕��X</A>�F����m�F
+<LI> <A HREF="http://www.tt.rim.or.jp/~yamacha">yamacha</A>：企画、仕様検討、動作確認
+<LI> <A HREF="http://www.scargo.com/pae">ぱえ</A>：仕様検討、動作確認
+<LI> <A HREF="http://www2e.biglobe.ne.jp/~ichise">いちせ</A>：仕様検討、動作確認
+<LI> <A HREF="http://www2q.biglobe.ne.jp/%7Ecoolly/index.html">coolly</A>：仕様検討、動作確認
+<LI> <A HREF="http://village.infoweb.ne.jp/~fxba0022/">sugich</A>：仕様検討、ドキュメント整備
+<LI> <A HREF="http://www.alles.or.jp/~hidetosh/index3.htm">BAB</A>：動作確認
+<LI> <A HREF="http://homepage1.nifty.com/perceaw/">ペルびと共和国の方々</A>：動作確認
 </UL>
 </P>
 <P>
-���̃h�L�������g�̉�ʃL���v�`���摜�́ACaptCE�ɂĎ�荞�݂܂����B�܂��A��ʃL���v�`���摜�̐ԐF�����͐����̂��߂ɁA�ʓr�������������̂ł��B
+このドキュメントの画面キャプチャ画像は、CaptCEにて取り込みました。また、画面キャプチャ画像の赤色文字は説明のために、別途書き足したものです。
 </P>
 
 <BR><BR>
 <DIV CLASS="foot">
-���C�Â��̓_������܂�����A<A HREF="mailto:ueno@allnet.ne.jp">
-ueno@allnet.ne.jp</A>�܂�
+お気づきの点がありましたら、<A HREF="mailto:ueno@allnet.ne.jp">
+ueno@allnet.ne.jp</A>まで
 </DIV>
 </BODY>
 </HTML>
