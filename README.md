@@ -10,6 +10,9 @@ JINZO Paint (16-color version) is a paint-style drawing tool for Windows CE. It 
 
 JINZO Paint (16色版) は、Windows CE で動作する、ペイント系のお絵描きツールです。基本的な描画、カットアンドペースト、ルーペ、塗りつぶし、直線・矩形・楕円描画、セーブ/ロード機能に加えて、強力な色演算機能を搭載しています。扱えるデータは、実画面サイズの16色データのみです。
 
+- [Official Website](http://www.tomozon.sakura.ne.jp/wince/)
+- [Documentation](https://brain-hackers.github.io/jinzo-paint/JZP16-102_Doc/jzpaint_J.html)
+
 ## License
 
 This software is distributed here under the [MIT License](LICENSE), with the permission of the original author [Tomohiro Ueno](http://www.tomozon.sakura.ne.jp/wince/), expressed in the following e-mail reply.
