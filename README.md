@@ -10,6 +10,8 @@ JINZO Viewer is a viewer for JINZO Paint. It can handle uncompressed BMP images 
 
 JINZO Viewer は JINZO Paint 用のビューアです。扱える画像フォーマットは、無圧縮 BMP だけですが 1bpp (2色) / 2bpp (4色) / 4bpp (16色) / 8bpp (256色) / 16bpp (65536色) / 24bpp (1677万色) です。
 
+- [Official Website](http://www.tomozon.sakura.ne.jp/wince/)
+
 ## License
 
 This software is distributed here under the [MIT License](LICENSE), with the permission of the original author [Tomohiro Ueno](http://www.tomozon.sakura.ne.jp/wince/), expressed in the following e-mail reply.
