@@ -173,7 +173,7 @@
 #define IDM_RECT_COPY                   40015
 #define IDM_PASTE                       40016
 #define IDM_LOOPE_X2                    40017
-#define IDM_LOOPE_X4                    40018
+#define IDM_LOOPE_X5                    40018
 #define IDM_LOOPE_X8                    40019
 #define IDM_LOOPE_X16                   40020
 #define IDM_LOOPE_X1                    40021

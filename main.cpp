@@ -73,6 +73,32 @@ void clipboard_bold(HWND);
 void clipboard_crop(BYTE *,BYTE);
 void magicwand(int,int);
 
+void doFileLoad(HWND);
+void doFileSaveAs(HWND);
+void doFileSaveClipboard(HWND);
+void doClear(HWND);
+void doRectCopy(HWND);
+void doRectCut(HWND);
+void doCopy(HWND);
+void doShowClipboard(HWND);
+void doPaste(HWND);
+void doSelectRegion(HWND);
+void doSelectFree(HWND);
+void doSelectAll(HWND);
+void doPatPrev(HWND);
+void doPatNext(HWND);
+void doToolSpuit(HWND);
+void doToolHand(HWND);
+void doToolPaint(HWND);
+void doToolFont(HWND);
+void doToolLine(HWND);
+void doToolRect(HWND);
+void doToolFRect(HWND);
+void doToolCircle(HWND);
+void doToolFCircle(HWND);
+void doMagicWand(HWND);
+void doZoomToggle(HWND);
+
 int flag=0,xflag,yflag;
 int	cbh;
 
@@ -97,6 +123,10 @@ int		drag_tap_flag=-1;
 int		tm=0,line_tm=-1;
 //int		backup_flag=0;
 BOOL	clipboard_flag=FALSE;
+// new vars
+int		loope_dynamic=0;
+int		select_preset=0;
+BOOL		toggle_pen_color=FALSE;
 
 typedef enum {
 	UP,MOVE,DOWN
@@ -156,9 +186,10 @@ POINT	pts[3];
 COLORREF col[4];
 
 int	pcolor=0;
-int	pstyle=0;
-int	ppat=0; 
-int	perase=0;
+int	pstyle=2;
+int	ppat=0;
+int	ptmp=0;
+int	perase=2;
 int	bgc=16;
 
 int	pat_inv=0;
@@ -182,7 +213,7 @@ BYTE	cconv[16],cconv_tmp[16];
 BOOL	conv_flag=FALSE;
 
 // ルーペ
-int		lmag[]={1,2,3,4,8};
+int		lmag[]={1,2,3,5,8};
 int		loope_num=0;
 int		loope_mag=lmag[loope_num];
 int		loope_x=0,loope_y=0;
@@ -518,8 +549,8 @@ void menu_check(void)
 	HMENU	hm;
 	int		i;
 	static UINT flag[]={MF_UNCHECKED,MF_CHECKED};
-	static UINT lmenu[]={IDM_LOOPE_X1,IDM_LOOPE_X2,IDM_LOOPE_X3,IDM_LOOPE_X4,IDM_LOOPE_X8};
-	static int	lmag[]={1,2,3,4,8};
+	static UINT lmenu[]={IDM_LOOPE_X1,IDM_LOOPE_X2,IDM_LOOPE_X3,IDM_LOOPE_X5,IDM_LOOPE_X8};
+	static int	lmag[]={1,2,3,5,8};
 
 	hm=CommandBar_GetMenu(ghWndCB, 0);
 	
@@ -540,7 +571,7 @@ void jzp_timer(HWND hWnd)
 
 	if (region_flag==LINE || region_flag==RECTANGLE || region_flag==CIRCLE) {
 		if (!pspc_flag) {
-			if (GetKeyState(VK_LSHIFT) || GetKeyState(VK_RSHIFT)) {
+			if (GetKeyState(VK_LSHIFT) || GetKeyState(VK_RSHIFT) || GetKeyState(VK_ESCAPE) || GetKeyState(VK_CAPITAL)) {
 				if (action_button_flag==FALSE) {
 					action_button_flag=TRUE;
 					InvalidateRect(hWnd,NULL,FALSE);
@@ -575,10 +606,285 @@ void jzp_timer(HWND hWnd)
 	}
 }
 
+//
+// reusable functions
+//
+
+void doFileLoad(HWND hWnd) {
+	put_colbutton_flag=FALSE;
+	load_bmp(hWnd);
+	put_colbutton_flag=TRUE;
+	col_counter=5;
+}
+
+void doFileSaveAs(HWND hWnd) {
+	put_colbutton_flag=FALSE;
+	save_bmp(hWnd);
+	put_colbutton_flag=TRUE;
+	col_counter=5;
+}
+
+void doFileSaveClipboard(HWND hWnd) {
+	int sx,sy,ex,ey;
+
+	sx=(region_sx<region_ex) ? region_sx : region_ex;
+	sy=(region_sy<region_ey) ? region_sy : region_ey;
+	ex=(region_sx>region_ex) ? region_sx : region_ex;
+	ey=(region_sy>region_ey) ? region_sy : region_ey;
+	put_colbutton_flag=FALSE;
+	save_clipboard(hWnd,sx,sy,ex,ey);
+	put_colbutton_flag=TRUE;
+	col_counter=5;
+}
+
+void doClear(HWND hWnd) {
+	if (page_clear(hWnd)==TRUE) {
+		overwrite_flag=FALSE;
+		modified_flag=0;
+		InvalidateRect(hWnd,NULL,FALSE);
+	}
+}
+
+void doRectCopy(HWND hWnd) {
+	int x,y,sx,sy,ex,ey;
+
+	if (rect_flag==TRUE) {
+		sx=(region_sx<region_ex) ? region_sx : region_ex;
+		sy=(region_sy<region_ey) ? region_sy : region_ey;
+		ex=(region_sx>region_ex) ? region_sx : region_ex;
+		ey=(region_sy>region_ey) ? region_sy : region_ey;
+		for (y=0;y<winHeight;y++)
+			for (x=0;x<winWidth;x++)
+				set_pixel(freeareaBuf,x,y,0);
+		for (y=sy;y<=ey;y++)
+			for (x=sx;x<=ex;x++)
+				set_pixel(freeareaBuf,x,y,1);
+		for (y=1;y<winHeight-2;y++)
+			for (x=1;x<winWidth-2;x++) {
+				if (get_pixel(freeareaBuf,x,y)==1) {
+					if (get_pixel(freeareaBuf,x-1,y  )==0) continue;
+					if (get_pixel(freeareaBuf,x+1,y  )==0) continue;
+					if (get_pixel(freeareaBuf,x  ,y-1)==0) continue;
+					if (get_pixel(freeareaBuf,x  ,y+1)==0) continue;
+					set_pixel(freeareaBuf,x,y,3);
+				}
+			}
+		rect_flag=FALSE;
+		clipboard_save_flag=TRUE;
+	} else {
+		free_paste_start();
+		clipboard_save_flag=FALSE;
+	}
+	select_x=select_dx=0;
+	select_y=select_dy=0;
+	cut_flag=FALSE;
+	rotate_flag=0;
+	region_flag=DRAG;
+	clipboard_flag=TRUE;
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doRectCut(HWND hWnd) {
+	int x,y,sx,sy,ex,ey;
+
+	if (rect_flag==TRUE) {
+		sx=(region_sx<region_ex) ? region_sx : region_ex;
+		sy=(region_sy<region_ey) ? region_sy : region_ey;
+		ex=(region_sx>region_ex) ? region_sx : region_ex;
+		ey=(region_sy>region_ey) ? region_sy : region_ey;
+		for (y=0;y<winHeight;y++)
+			for (x=0;x<winWidth;x++)
+				set_pixel(freeareaBuf,x,y,0);
+		for (y=sy;y<=ey;y++)
+			for (x=sx;x<=ex;x++)
+				set_pixel(freeareaBuf,x,y,1);
+		for (y=1;y<winHeight-2;y++)
+			for (x=1;x<winWidth-2;x++) {
+				if (get_pixel(freeareaBuf,x,y)==1) {
+					if (get_pixel(freeareaBuf,x-1,y  )==0) continue;
+					if (get_pixel(freeareaBuf,x+1,y  )==0) continue;
+					if (get_pixel(freeareaBuf,x  ,y-1)==0) continue;
+					if (get_pixel(freeareaBuf,x  ,y+1)==0) continue;
+					set_pixel(freeareaBuf,x,y,3);
+				}
+			}
+		rect_flag=FALSE;
+		clipboard_save_flag=TRUE;
+	} else {
+		free_paste_start();
+		clipboard_save_flag=FALSE;
+	}
+	select_x=select_dx=0;
+	select_y=select_dy=0;
+	cut_flag=TRUE;
+	undo_store(hWnd);
+	cut_region(hWnd);
+	modified_flag=1;
+	rotate_flag=0;
+	region_flag=DRAG;
+	clipboard_flag=TRUE;
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doCopy(HWND hWnd) {
+	select_dx=0;
+	select_dy=0;
+	region_flag=DRAG;
+	toolpic=rect_flag ? TOOLPIC_COPY_RECT : TOOLPIC_COPY_FREE;
+	make_command_bar(hWnd);
+}
+
+void doShowClipboard(HWND hWnd) {
+	select_dx=0;
+	select_dy=0;
+	region_flag=DRAG;
+	toolpic=rect_flag ? TOOLPIC_COPY_RECT : TOOLPIC_COPY_FREE;
+	make_command_bar(hWnd);
+}
+
+void doPaste(HWND hWnd) {
+	paste(hWnd);
+	modified_flag=1;
+	select_dx=0;
+	select_dy=0;
+}
+
+void doSelectRegion(HWND hWnd) {
+	region_flag=SELECT_START;
+	start_select_rect_flag=AREA_RECT;
+	toolpic=TOOLPIC_COPY_RECT;
+	make_command_bar(hWnd);
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doSelectFree(HWND hWnd) {
+	region_flag=SELECT_FREE_START;
+	start_select_rect_flag=AREA_FREE;
+	toolpic=TOOLPIC_COPY_FREE;
+	make_command_bar(hWnd);
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doSelectAll(HWND hWnd) {
+	region_flag=SELECT_START;
+	start_select_rect_flag=AREA_ALL;
+	toolpic=TOOLPIC_COPY_RECT;
+	select_all(hWnd);
+	make_command_bar(hWnd);
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doPatPrev(HWND hWnd) {
+	ptmp = ppat - 1;
+	if (ptmp < 0) ptmp = 8;
+	ppat = ptmp;
+	pat_button(hWnd,ptmp);
+	ptmp=0;
+}
+
+void doPatNext(HWND hWnd) {
+	ptmp = ppat + 1;
+	if (ptmp > 8) ptmp = 0;
+	ppat = ptmp;
+	pat_button(hWnd,ptmp);
+	ptmp=0;
+}
+
+void doToolSpuit(HWND hWnd) {
+	region_flag=SPUIT;
+	toolpic=TOOLPIC_SPUIT;
+	make_command_bar(hWnd);
+}
+
+void doToolHand(HWND hWnd) {
+	hand_x=hand_dx=0;
+	hand_y=hand_dy=0;
+	hand_lx=loope_x;
+	hand_ly=loope_y;
+	hand_x=-1;
+	region_flag=HAND;
+	toolpic=TOOLPIC_HAND;
+	make_command_bar(hWnd);
+}
+
+void doToolPaint(HWND hWnd) {
+	region_flag=PAINT;
+	toolpic=TOOLPIC_PAINT;
+	make_command_bar(hWnd);
+	undo_store(hWnd);
+	modified_flag=1;
+}
+
+void doToolFont(HWND hWnd) {
+	rotate_flag=0;
+	region_flag=FONT;
+	toolpic=TOOLPIC_FONT;
+	make_command_bar(hWnd);
+//	input_text(hWnd);
+}
+
+void doToolLine(HWND hWnd) {
+	region_flag=LINE;
+	toolpic=TOOLPIC_LINE;
+	make_command_bar(hWnd);
+	line_start(hWnd);
+}
+
+void doToolRect(HWND hWnd) {
+	region_flag=RECTANGLE;
+	fill_flag=FALSE;
+	toolpic=TOOLPIC_RECT;
+	make_command_bar(hWnd);
+	line_start(hWnd);
+}
+
+void doToolFRect(HWND hWnd) {
+	region_flag=RECTANGLE;
+	fill_flag=TRUE;
+	toolpic=TOOLPIC_RECTFILL;
+	make_command_bar(hWnd);
+	line_start(hWnd);
+}
+
+void doToolCircle(HWND hWnd) {
+	region_flag=CIRCLE;
+	fill_flag=FALSE;
+	toolpic=TOOLPIC_CIRCLE;
+	make_command_bar(hWnd);
+	line_start(hWnd);
+}
+
+void doToolFCircle(HWND hWnd) {
+	region_flag=CIRCLE;
+	fill_flag=TRUE;
+	toolpic=TOOLPIC_CIRCLEFILL;
+	make_command_bar(hWnd);
+	line_start(hWnd);
+}
+
+void doMagicWand(HWND hWnd) {
+	region_flag=SELECT;
+	start_select_rect_flag=AREA_MAGICWAND;
+	toolpic=TOOLPIC_COPY_MAGICWAND;
+	select_magicwand(hWnd);
+	make_command_bar(hWnd);
+	InvalidateRect(hWnd,NULL,FALSE);
+}
+
+void doZoomToggle(HWND hWnd) {
+	if (loope_num!=0) {
+		mag_button(hWnd,0);
+	} else {
+		mag_button(hWnd,loope_dynamic);
+	}
+}
+
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 						 WPARAM wParam, LPARAM lParam)
 {
-	int		x,y,sx,sy,ex,ey,i,j;
+//	int		x,y,sx,sy,ex,ey,i,j;
+	int		i,j;
+
 	switch (uMessage) {
 		case WM_TIMER:		jzp_timer(hWnd);		break;
 
@@ -589,14 +895,12 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 		case WM_COMMAND: 
 			switch (wParam) {
 			// ファイル・メニュー
-				case IDM_CLEAR:		
-					if (page_clear(hWnd)==TRUE) {
-						overwrite_flag=FALSE;
-						modified_flag=0;
-						InvalidateRect(hWnd,NULL,FALSE);
-					}
+				case IDM_CLEAR:
+					doClear(hWnd);
 					break;
-				case IDM_EXIT:		OnFileExit(hWnd);		break;
+				case IDM_EXIT:
+					OnFileExit(hWnd);
+					break;
 
 			// ヘルプ・メニュー
 				case IDM_JZV_LINK:
@@ -604,179 +908,64 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					jzv_link(hWnd);
 					overwrite_flag=TRUE;
 					break;
-				case IDM_UNDO:		do_undo(hWnd);			break;
+				case IDM_UNDO:
+					do_undo(hWnd);
+					break;
 				case IDM_LOAD:
-					put_colbutton_flag=FALSE;
-					load_bmp(hWnd);
-					put_colbutton_flag=TRUE;
-					col_counter=5;
+					doFileLoad(hWnd);
 					break;
-				case IDM_SAVE:		
-					put_colbutton_flag=FALSE;
-					save_bmp(hWnd);			
-					put_colbutton_flag=TRUE;
-					col_counter=5;
-					break; 
-				case IDM_SAVE_CLIPBOARD:		
-					sx=(region_sx<region_ex) ? region_sx : region_ex;
-					sy=(region_sy<region_ey) ? region_sy : region_ey;
-					ex=(region_sx>region_ex) ? region_sx : region_ex;
-					ey=(region_sy>region_ey) ? region_sy : region_ey;
-					put_colbutton_flag=FALSE;
-					save_clipboard(hWnd,sx,sy,ex,ey);			
-					put_colbutton_flag=TRUE;
-					col_counter=5;
-					break; 
-				case IDM_OVERWRITE:	force_save();	break; 
+				case IDM_SAVE:
+					doFileSaveAs(hWnd);
+					break;
+				case IDM_SAVE_CLIPBOARD:
+					doFileSaveClipboard(hWnd);
+					break;
+				case IDM_OVERWRITE:
+					force_save();
+					break;
 
-				case IDM_ABOUT:		
-					OnHelp(hWnd, wParam, lParam);		
+				case IDM_ABOUT:
+					OnHelp(hWnd, wParam, lParam);
 					col_counter=5;
 					break;
 
-				case IDM_RECT_COPY:	
-					if (rect_flag==TRUE) {
-						sx=(region_sx<region_ex) ? region_sx : region_ex;
-						sy=(region_sy<region_ey) ? region_sy : region_ey;
-						ex=(region_sx>region_ex) ? region_sx : region_ex;
-						ey=(region_sy>region_ey) ? region_sy : region_ey;
-						for (y=0;y<winHeight;y++)
-							for (x=0;x<winWidth;x++)
-								set_pixel(freeareaBuf,x,y,0);
-						for (y=sy;y<=ey;y++)
-							for (x=sx;x<=ex;x++)
-								set_pixel(freeareaBuf,x,y,1);
-						for (y=1;y<winHeight-2;y++)
-							for (x=1;x<winWidth-2;x++) {
-								if (get_pixel(freeareaBuf,x,y)==1) {
-									if (get_pixel(freeareaBuf,x-1,y  )==0) continue;
-									if (get_pixel(freeareaBuf,x+1,y  )==0) continue;
-									if (get_pixel(freeareaBuf,x  ,y-1)==0) continue;
-									if (get_pixel(freeareaBuf,x  ,y+1)==0) continue;
-									set_pixel(freeareaBuf,x,y,3);
-								}
-							}
-						rect_flag=FALSE;
-						clipboard_save_flag=TRUE;
-					} else {
-						free_paste_start();
-						clipboard_save_flag=FALSE;
-					}
-					select_x=select_dx=0;
-					select_y=select_dy=0;
-					cut_flag=FALSE;
-					rotate_flag=0;
-					region_flag=DRAG;  
-					clipboard_flag=TRUE;
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
+				case IDM_RECT_COPY:
+					doRectCopy(hWnd);
+					break;
 				case IDM_RECT_CUT:
-					if (rect_flag==TRUE) {
-						sx=(region_sx<region_ex) ? region_sx : region_ex;
-						sy=(region_sy<region_ey) ? region_sy : region_ey;
-						ex=(region_sx>region_ex) ? region_sx : region_ex;
-						ey=(region_sy>region_ey) ? region_sy : region_ey;
-						for (y=0;y<winHeight;y++) 
-							for (x=0;x<winWidth;x++)
-								set_pixel(freeareaBuf,x,y,0);
-						for (y=sy;y<=ey;y++)
-							for (x=sx;x<=ex;x++)
-								set_pixel(freeareaBuf,x,y,1);
-						for (y=1;y<winHeight-2;y++)
-							for (x=1;x<winWidth-2;x++) {
-								if (get_pixel(freeareaBuf,x,y)==1) {
-									if (get_pixel(freeareaBuf,x-1,y  )==0) continue;
-									if (get_pixel(freeareaBuf,x+1,y  )==0) continue;
-									if (get_pixel(freeareaBuf,x  ,y-1)==0) continue;
-									if (get_pixel(freeareaBuf,x  ,y+1)==0) continue;
-									set_pixel(freeareaBuf,x,y,3);
-								}
-							}
-						rect_flag=FALSE;
-						clipboard_save_flag=TRUE;
-					} else {
-						free_paste_start();
-						clipboard_save_flag=FALSE;
-					}
-					select_x=select_dx=0;
-					select_y=select_dy=0;
-					cut_flag=TRUE;
-					undo_store(hWnd);
-					cut_region(hWnd);
-					modified_flag=1;
-					rotate_flag=0;
-					region_flag=DRAG;
-					clipboard_flag=TRUE;
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
-				case IDM_PASTE:		
-					select_dx=0;
-					select_dy=0;
-					region_flag=DRAG;
-					toolpic=rect_flag ? TOOLPIC_COPY_RECT : TOOLPIC_COPY_FREE;
-					make_command_bar(hWnd);
-					break;	
-				case IDM_DO_PASTE:		
-					paste(hWnd);
-					modified_flag=1;
-					select_dx=0;
-					select_dy=0;
-					break;	
-				case IDM_PASTE_CANSEL:	paste_cansel(hWnd);	break;	
-
-				case IDM_SELECT_REGION:	
-					region_flag=SELECT_START;
-					start_select_rect_flag=AREA_RECT;
-					toolpic=TOOLPIC_COPY_RECT;
-					make_command_bar(hWnd);		
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
+					doRectCut(hWnd);
+					break;
+				case IDM_PASTE:
+					doShowClipboard(hWnd);
+					break;
+				case IDM_DO_PASTE:
+					doPaste(hWnd);
+					break;
+				case IDM_PASTE_CANSEL:
+					paste_cansel(hWnd);
+					break;
+				case IDM_SELECT_REGION:
+					doSelectRegion(hWnd);
+					break;
 				case IDM_SELECT_FREE:
-					region_flag=SELECT_FREE_START;
-					start_select_rect_flag=AREA_FREE;
-					toolpic=TOOLPIC_COPY_FREE;
-					make_command_bar(hWnd);		
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
+					doSelectFree(hWnd);
+					break;
 				case IDM_SELECT_ALL:
-					region_flag=SELECT_START;
-					start_select_rect_flag=AREA_ALL;
-					toolpic=TOOLPIC_COPY_RECT;
-					select_all(hWnd);
-					make_command_bar(hWnd);
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
+					doSelectAll(hWnd);
+					break;
 				case IDM_MAGICWAND:
-					region_flag=SELECT;
-					start_select_rect_flag=AREA_MAGICWAND;
-					toolpic=TOOLPIC_COPY_MAGICWAND;
-					select_magicwand(hWnd);
-					make_command_bar(hWnd);
-					InvalidateRect(hWnd,NULL,FALSE);
-					break;	
+					doMagicWand(hWnd);
+					break;
 
 				case IDM_SPUIT:
-					region_flag=SPUIT;
-					toolpic=TOOLPIC_SPUIT;
-					make_command_bar(hWnd);
+					doToolSpuit(hWnd);
 					break;
 				case IDM_HAND:
-					hand_x=hand_dx=0;
-					hand_y=hand_dy=0;
-					hand_lx=loope_x;
-					hand_ly=loope_y;
-					hand_x=-1;
-					region_flag=HAND;
-					toolpic=TOOLPIC_HAND;
-					make_command_bar(hWnd);
+					doToolHand(hWnd);
 					break;
-				case IDM_PAINT:		
-					region_flag=PAINT;
-					toolpic=TOOLPIC_PAINT;
-					make_command_bar(hWnd);
-					undo_store(hWnd);
-					modified_flag=1;
-					break;	
+				case IDM_PAINT:
+					doToolPaint(hWnd);
+					break;
 
 				case IDM_FLIP_VERTICAL:
 					rotate_flag=rotate_table[rotate_flag][3];
@@ -921,13 +1110,9 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
 
-				case IDM_FONT:	
-					rotate_flag=0;
-					region_flag=FONT;
-					toolpic=TOOLPIC_FONT;
-					make_command_bar(hWnd);
-//					input_text(hWnd);	
-					break;	
+				case IDM_FONT:
+					doToolFont(hWnd);
+					break;
 				
 				case IDM_PENBUTTON:	pen_button(hWnd);	break;	
 //				case IDM_COLBUTTON:	col_button(hWnd);	break;	
@@ -936,7 +1121,7 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 				case IDM_LOOPE_X1:	mag_button(hWnd,0);	break;	
 				case IDM_LOOPE_X2:	mag_button(hWnd,1);	break;	
 				case IDM_LOOPE_X3:	mag_button(hWnd,2);	break;	
-				case IDM_LOOPE_X4:	mag_button(hWnd,3);	break;	
+				case IDM_LOOPE_X5:	mag_button(hWnd,3);	break;	
 				case IDM_LOOPE_X8:	mag_button(hWnd,4);	break;	
 				case IDM_B_PAT0:	pat_button(hWnd,0);	break;	
 				case IDM_B_PAT1:	pat_button(hWnd,1);	break;	
@@ -987,45 +1172,26 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 					break;	
 
 				case IDM_COM_LINE:
-					region_flag=LINE;
-					toolpic=TOOLPIC_LINE;
-					make_command_bar(hWnd);
-					line_start(hWnd);
+					doToolLine(hWnd);
 					break;
 				case IDM_COM_RECT:
-					region_flag=RECTANGLE;
-					fill_flag=FALSE;
-					toolpic=TOOLPIC_RECT;
-					make_command_bar(hWnd);
-					line_start(hWnd);
+					doToolRect(hWnd);
 					break;
 				case IDM_COM_RECTFILL:
-					region_flag=RECTANGLE;
-					fill_flag=TRUE;
-					toolpic=TOOLPIC_RECTFILL;
-					make_command_bar(hWnd);
-					line_start(hWnd);
+					doToolFRect(hWnd);
 					break;
 				case IDM_COM_CIRCLE:
-					region_flag=CIRCLE;
-					fill_flag=FALSE;
-					toolpic=TOOLPIC_CIRCLE;
-					make_command_bar(hWnd);
-					line_start(hWnd);
+					doToolCircle(hWnd);
 					break;
 				case IDM_COM_CIRCLEFILL:
-					region_flag=CIRCLE;
-					fill_flag=TRUE;
-					toolpic=TOOLPIC_CIRCLEFILL;
-					make_command_bar(hWnd); 
-					line_start(hWnd);
+					doToolFCircle(hWnd);
 					break;
 				case IDM_RETURN:
 					if (action_button_flag==FALSE) {
 						action_button_flag=TRUE;
 						InvalidateRect(hWnd,NULL,FALSE);
 					}
-						pstyle=2;
+					pstyle=2;
 					break;
 				case IDM_LINE_ADJUST_0:
 					line_adjust_max=0;
@@ -1047,31 +1213,290 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 			break;
 		case WM_KEYDOWN:
 			switch (LOWORD(wParam)) {
+				// soft key: vol up
+				case 0xDB:		// VK_OEM_4
+					doPatPrev(hWnd);
+					break;
+				// soft key: vol dn
+				case 0xDD:		// VK_OEM_6
+					doPatNext(hWnd);
+					break;
+
+				// soft key: examples
+				case 0xBA:		// VK_OEM_1
+					// toggle pen/eraser
+					if (region_flag==PEN) {
+						erase_button(hWnd);
+					} else {
+						pen_button(hWnd);
+					}
+					break;
+				// soft key: clear
+				case VK_END:
+					do_undo(hWnd);
+					break;
+
+				// background color
+				//case 0x51:	//q
+				//	break;
+				// color convert
+				// magic wand (w)
+				case 0x57:		//w
+					doMagicWand(hWnd);
+					break;
+				// palette option
+				//case 0x45:	//e
+				//	break;
+				// color set
+				//case 0x52:	//r
+				//	break;
+				// palette load
+				//case 0x54:	//t
+				//	break;
+				// load custumtone
+				//case 0x59:	//y
+				//	break;
+
+				// undo (z)
+				case 0x5A:		//z
+					do_undo(hWnd);
+					break;
+				// cut (x)
+				case 0x58:		//x
+					doRectCut(hWnd);
+					break;
+				// copy (c)
+				case 0x43:		//c
+					doCopy(hWnd);
+					break;
+				// paste (v)
+				case 0x56:		//v
+					doPaste(hWnd);
+					break;
+
+				// toggle pen (b)
+				case 0x42:		//b
+					toggle_pen_color = !toggle_pen_color;
+					break;
+				// pen (n)
+				case 0x4E:		//n
+				case VK_PRIOR:
+					pen_button(hWnd);
+					break;
+				// eraser (e)
+				case 0x45:		//e
+				case VK_NEXT:
+					erase_button(hWnd);
+					break;
+
+				// picker (i)
+				case 0x49:		//i
+					doToolSpuit(hWnd);
+					break;
+				// pattern toggle (caps lock)
+				case VK_CAPITAL:
+					if (GetKeyState(VK_CAPITAL)) {
+						ptmp=ppat;
+						pat_button(hWnd,0);
+					} else {
+						pat_button(hWnd,ptmp);
+						ptmp=0;
+					}
+					break;
+				// hand (h)
+				case 0x48:		//h
+					doToolHand(hWnd);
+					break;
+				// paint (g)
+				case 0x47:		//g
+					doToolPaint(hWnd);
+					break;
+				// font (f)
+				case 0x46:		//f
+					doToolFont(hWnd);
+					break;
+				// line (l)
+				case 0x4C:		//l
+					doToolLine(hWnd);
+					break;
+				// rect (r)
+				case 0x52:		//r
+					doToolRect(hWnd);
+					break;
+				// f rect (t)
+				case 0x54:		//t
+					doToolFRect(hWnd);
+					break;
+				// circle (o)
+				case 0x4F:		//o
+					doToolCircle(hWnd);
+					break;
+				// f circle (p)
+				case 0x50:		//p
+					doToolFCircle(hWnd);
+					break;
+
+					// load (f1)
+				case VK_F1:
+					doFileLoad(hWnd);
+					break;
+				// save or save as (f2)
+				case VK_F2:
+					force_save();
+					break;
+				// save clipboard (f3)
+				case VK_F3:
+					doFileSaveClipboard(hWnd);
+					break;
+				// preset selection sizes (f4)
+				case VK_F4:
+					region_flag=SELECT_START;
+					toolpic=TOOLPIC_COPY_RECT;
+					start_select_rect_flag=AREA_RECT;
+					select_region(hWnd);
+					region_sx=0;
+					region_sy=0;
+					switch (select_preset) {
+						case 0:
+							region_ex=400-1;
+							region_ey=240-1;
+							break;
+						case 1:
+							region_ex=350-1;
+							region_ey=155-1;
+							break;
+						case 2:
+							region_ex=32-1;
+							region_ey=32-1;
+							break;
+					}
+					select_x=select_dx=region_ex;
+					select_y=select_dy=region_ey;
+					select_free_x=region_sx;
+					select_free_y=region_sy;
+					pts[2].x=region_sx;
+					pts[2].y=region_sy;
+					region_flag=SELECT;
+					rect_flag=TRUE;
+					select_preset = select_preset + 1;
+					if (select_preset > 2) select_preset=0;
+					make_command_bar(hWnd);
+					InvalidateRect(hWnd,NULL,FALSE);
+					break;
+
+				// zoom toggle (f7)
+				case VK_F7:
+					doZoomToggle(hWnd);
+					break;
+				// zoom out (f8)
+				case VK_F8:
+					loope_dynamic = loope_dynamic - 1;
+					if (loope_dynamic < 0) loope_dynamic = 0;
+					mag_button(hWnd,loope_dynamic);
+					break;
+				// zoom in (f9)
+				case VK_F9:
+					loope_dynamic = loope_dynamic + 1;
+					if (loope_dynamic > 4) loope_dynamic = 4;
+					mag_button(hWnd,loope_dynamic);
+					break;
+
+				// exit app
+				case VK_F10:
+					OnFileExit(hWnd);
+					break;
+
+				// pattern next
+				case VK_F11:	// characters
+					doPatPrev(hWnd);
+					break;
+				// pattern prev
+				case VK_F12:	// symbols
+					doPatNext(hWnd);
+					break;
+
+				// zoom
+				case VK_SPACE:
+					doZoomToggle(hWnd);
+					break;
+				// reset pan
+				case 0xBD:		// VK_OEM_MINUS
+					loope_x=0;
+					loope_y=0;
+					InvalidateRect(hWnd,NULL,FALSE);
+					break;
+
 				case VK_UP:
-					loope_y-=winHeight/loope_mag/loope_move;
-					if (loope_y<-winHeight/loope_mag/2-1)
-						loope_y=-winHeight/loope_mag/2-1;
+					if (GetKeyState(VK_CAPITAL)) {
+						loope_y=-winHeight/loope_mag/2-1;;
+					} else if (region_flag==DRAG) {
+						rotate_flag=rotate_table[rotate_flag][3];
+					} else {
+						loope_y-=winHeight/loope_mag/loope_move;
+						if (loope_y<-winHeight/loope_mag/2-1)
+							loope_y=-winHeight/loope_mag/2-1;
+					}
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
 				case VK_DOWN:
-					loope_y+=winHeight/loope_mag/loope_move;
-					if (loope_y>winHeight-winHeight/loope_mag/2)
+					if (GetKeyState(VK_CAPITAL)) {
 						loope_y=winHeight-winHeight/loope_mag/2;
+					} else if (region_flag==DRAG) {
+						rotate_flag=rotate_table[rotate_flag][2];
+					} else {
+						loope_y+=winHeight/loope_mag/loope_move;
+						if (loope_y>winHeight-winHeight/loope_mag/2)
+							loope_y=winHeight-winHeight/loope_mag/2;
+					}
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
 				case VK_LEFT:
-					loope_x-=winWidth/loope_mag/loope_move;
-					if (loope_x<-winWidth/loope_mag/2)
+					if (GetKeyState(VK_CAPITAL)) {
 						loope_x=-winWidth/loope_mag/2;
+					} else if (region_flag==DRAG) {
+						rotate_flag=rotate_table[rotate_flag][1];
+					} else {
+						loope_x-=winWidth/loope_mag/loope_move;
+						if (loope_x<-winWidth/loope_mag/2)
+							loope_x=-winWidth/loope_mag/2;
+					}
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
 				case VK_RIGHT:
-					loope_x+=winWidth/loope_mag/loope_move;
-					if (loope_x>winWidth-winWidth/loope_mag/2)
+					if (GetKeyState(VK_CAPITAL)) {
 						loope_x=winWidth-winWidth/loope_mag/2;
+					} else if (region_flag==DRAG) {
+						rotate_flag=rotate_table[rotate_flag][0];
+					} else {
+						loope_x+=winWidth/loope_mag/loope_move;
+						if (loope_x>winWidth-winWidth/loope_mag/2)
+							loope_x=winWidth-winWidth/loope_mag/2;
+					}
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
+
+				case VK_BACK:
+					doClear(hWnd);
+					pat_button(hWnd,0);
+					col_button(hWnd,0);
+					break;
+
+				case VK_RETURN:
+					if (region_flag!=DRAG) {
+						doSelectFree(hWnd);
+					} else {
+						clipboard_lasso(hWnd);
+						InvalidateRect(hWnd,NULL,FALSE);
+					}
+					break;
+
+				case VK_ESCAPE:
 				case VK_F23:
+					// cancel selection
+//					if (region_flag==DRAG) {
+//						paste_cansel(hWnd);
+//					}
+					// action
 					if (action_button_flag==FALSE) {
 						action_button_flag=TRUE;
 						InvalidateRect(hWnd,NULL,FALSE);
@@ -1081,7 +1506,7 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMessage,
 			break;
 		case WM_KEYUP:
 			switch (LOWORD(wParam))	{
-				case VK_RETURN:
+				case VK_ESCAPE:
 					action_button_flag=FALSE;
 					InvalidateRect(hWnd,NULL,FALSE);
 					break;
@@ -3728,6 +4153,11 @@ void mouse_down(HWND hWnd, WPARAM wParam, LPARAM lParam)
 //	pts[0].y=-1;
 	pts[1].x=x;
 	pts[1].y=y;
+
+	// swap between black and white
+	if (toggle_pen_color==TRUE) {
+		pcolor = (pcolor==0 ? 3 : 0);
+	}
 
 	put_pen(x,y,baseBuf,region_flag==PEN ? pcolor : 3,region_flag==PEN ? pstyle : perase,TRUE,FALSE);
 	modified_flag=1;

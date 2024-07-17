@@ -118,7 +118,7 @@ BEGIN
         MENUITEM "x 1",                         IDM_LOOPE_X1
         MENUITEM "x 2",                         IDM_LOOPE_X2
         MENUITEM "x 3",                         IDM_LOOPE_X3
-        MENUITEM "x 4",                         IDM_LOOPE_X4
+        MENUITEM "x 5",                         IDM_LOOPE_X5
         MENUITEM "x 8",                         IDM_LOOPE_X8
         MENUITEM SEPARATOR
         MENUITEM "x1View",                      IDM_LOOPE_ORG
